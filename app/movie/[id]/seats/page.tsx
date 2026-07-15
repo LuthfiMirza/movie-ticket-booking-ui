@@ -21,7 +21,7 @@ export default function SeatsPage({ params, searchParams }: SeatsPageProps) {
   if (!seatMap) notFound();
 
   return (
-    <main className="mx-auto max-w-2xl px-4 py-10 sm:px-6 sm:py-14">
+    <main className="mx-auto max-w-2xl px-4 pb-36 pt-10 sm:px-6 sm:pb-32 sm:pt-14">
       <header className="mb-8 text-center">
         <h1 className="text-2xl font-bold tracking-tight">{movie.title}</h1>
         <p className="mt-1 text-sm text-neutral-400">
