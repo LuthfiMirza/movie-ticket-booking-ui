@@ -51,7 +51,8 @@ export default function SeatSelector({
     <div className="flex flex-col gap-6">
       <div className="flex flex-col items-center gap-4">
         <div className="mb-2 h-1.5 w-2/3 max-w-sm rounded-full bg-neutral-800" />
-        <div className="flex flex-col gap-1.5">
+        <div className="w-full overflow-x-auto pb-2">
+          <div className="mx-auto flex w-max flex-col gap-1.5">
           {seatsByRow.map((rowSeats, index) => (
             <div key={rows[index]} className="flex items-center gap-1.5">
               <span className="w-4 text-xs text-neutral-500">{rows[index]}</span>
@@ -96,29 +97,31 @@ export default function SeatSelector({
         <p className="text-center text-sm text-red-500">{validationMessage}</p>
       )}
 
-      <div className="flex flex-col items-center gap-3 border-t border-neutral-800 pt-6 sm:flex-row sm:justify-between">
-        <div>
-          <p className="text-sm text-neutral-400">
-            {selectedSeatIds.length} seat{selectedSeatIds.length === 1 ? "" : "s"}{" "}
-            selected
-          </p>
-          <p className="text-lg font-semibold">{formatPrice(total)}</p>
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-neutral-800 bg-neutral-950/95 px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] shadow-2xl shadow-black/40 backdrop-blur sm:px-6">
+        <div className="mx-auto flex max-w-2xl flex-col items-center gap-3 sm:flex-row sm:justify-between">
+          <div>
+            <p aria-live="polite" className="text-sm text-neutral-400">
+              {selectedSeatIds.length} seat{selectedSeatIds.length === 1 ? "" : "s"}{" "}
+              selected
+            </p>
+            <p className="text-lg font-semibold">{formatPrice(total)}</p>
+          </div>
+          <Link
+            href={
+              selectedSeatIds.length > 0
+                ? `/movie/${movieId}/payment?showtime=${showtimeId}&seats=${selectedSeatIds.join(",")}`
+                : "#"
+            }
+            aria-disabled={selectedSeatIds.length === 0}
+            className={`inline-flex w-full items-center justify-center rounded-md px-5 py-2.5 text-sm font-medium transition-colors sm:w-fit ${
+              selectedSeatIds.length > 0
+                ? "bg-red-600 text-white hover:bg-red-500"
+                : "pointer-events-none bg-neutral-800 text-neutral-500"
+            }`}
+          >
+            Continue to Payment
+          </Link>
         </div>
-        <Link
-          href={
-            selectedSeatIds.length > 0
-              ? `/movie/${movieId}/payment?showtime=${showtimeId}&seats=${selectedSeatIds.join(",")}`
-              : "#"
-          }
-          aria-disabled={selectedSeatIds.length === 0}
-          className={`inline-flex w-full items-center justify-center rounded-md px-5 py-2.5 text-sm font-medium transition-colors sm:w-fit ${
-            selectedSeatIds.length > 0
-              ? "bg-red-600 text-white hover:bg-red-500"
-              : "pointer-events-none bg-neutral-800 text-neutral-500"
-          }`}
-        >
-          Continue to Payment
-        </Link>
       </div>
     </div>
   );

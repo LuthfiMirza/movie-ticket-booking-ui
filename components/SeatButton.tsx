@@ -21,7 +21,7 @@ export default function SeatButton({ seatId, status, onClick }: SeatButtonProps)
       disabled={status === "booked"}
       aria-label={`Seat ${seatId} — ${status}`}
       aria-pressed={status === "selected"}
-      className={`flex h-8 w-8 items-center justify-center rounded border text-[11px] font-medium transition-colors sm:h-9 sm:w-9 ${STATUS_CLASSES[status]}`}
+      className={`flex h-10 w-10 items-center justify-center rounded border text-xs font-medium transition-colors sm:h-9 sm:w-9 sm:text-[11px] ${STATUS_CLASSES[status]}`}
     >
       {seatId}
     </button>
