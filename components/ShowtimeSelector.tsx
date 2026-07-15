@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import type { Showtime } from "@/types";
 import { LOCATION_STORAGE_KEY } from "@/components/LocationPicker";
-import { cinemas } from "@/lib/data";
+import { cinemas, isShowtimeSoldOut } from "@/lib/data";
 import { formatDateLabel, formatPrice } from "@/lib/format";
 
 interface ShowtimeSelectorProps {
@@ -104,27 +104,35 @@ export default function ShowtimeSelector({ showtimes }: ShowtimeSelectorProps) {
             </h2>
             <div className="flex flex-wrap gap-2">
               {showtimesForDate.map((showtime) => {
+                const isSoldOut = isShowtimeSoldOut(showtime.id);
                 const isSelected = showtime.id === selectedShowtimeId;
                 return (
                   <button
                     key={showtime.id}
                     type="button"
                     onClick={() => setSelectedShowtimeId(showtime.id)}
+                    disabled={isSoldOut}
                     className={`flex flex-col items-start rounded-md border px-4 py-2 text-left transition-colors ${
-                      isSelected
+                      isSoldOut
+                        ? "cursor-not-allowed border-neutral-800 bg-neutral-950 opacity-60"
+                        : isSelected
                         ? "border-red-600 bg-red-600/10"
                         : "border-neutral-800 bg-neutral-900 hover:border-neutral-700"
                     }`}
                   >
                     <span
                       className={`text-sm font-semibold ${
-                        isSelected ? "text-red-500" : "text-neutral-100"
+                        isSoldOut
+                          ? "text-neutral-600"
+                          : isSelected
+                            ? "text-red-500"
+                            : "text-neutral-100"
                       }`}
                     >
                       {showtime.time}
                     </span>
                     <span className="text-xs text-neutral-500">
-                      {showtime.studio} · {formatPrice(showtime.price)}
+                      {showtime.studio} · {isSoldOut ? "Sold Out" : formatPrice(showtime.price)}
                     </span>
                   </button>
                 );
