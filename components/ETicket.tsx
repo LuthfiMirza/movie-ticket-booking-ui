@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { formatDateLabel, formatPrice } from "@/lib/format";
+import { calculateTotal, getPricingSessionKey } from "@/lib/pricing";
 import { clearReservation } from "@/lib/reservation";
 import type { Movie, Showtime } from "@/types";
 
@@ -11,7 +12,7 @@ interface ETicketProps {
   movie: Movie;
   showtime: Showtime;
   seatIds: string[];
-  total: number;
+  pricePerSeat: number;
 }
 
 function generateBookingReference(): string {
@@ -24,13 +25,26 @@ export default function ETicket({
   movie,
   showtime,
   seatIds,
-  total,
+  pricePerSeat,
 }: ETicketProps) {
   const [bookingReference] = useState(() => generateBookingReference());
+  const [voucherCode, setVoucherCode] = useState("");
+  const pricing = useMemo(
+    () => calculateTotal(seatIds.length, pricePerSeat, voucherCode),
+    [pricePerSeat, seatIds.length, voucherCode]
+  );
 
   useEffect(() => {
+    const storedVoucher = window.sessionStorage.getItem(
+      getPricingSessionKey(showtime.id, seatIds)
+    );
+
+    if (storedVoucher) {
+      setVoucherCode(storedVoucher);
+    }
+
     clearReservation(showtime.id);
-  }, [showtime.id]);
+  }, [seatIds, showtime.id]);
 
   return (
     <div className="overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900 shadow-2xl shadow-black/20">
@@ -81,7 +95,24 @@ export default function ETicket({
           </div>
           <div>
             <p className="text-neutral-500">Total</p>
-            <p className="mt-1 font-semibold">{formatPrice(total)}</p>
+            <p className="mt-1 font-semibold">{formatPrice(pricing.total)}</p>
+          </div>
+        </div>
+
+        <div className="mt-4 grid gap-3 rounded-lg border border-neutral-800 bg-neutral-950 p-4 text-sm sm:grid-cols-3">
+          <div>
+            <p className="text-neutral-500">Subtotal</p>
+            <p className="mt-1 font-semibold">{formatPrice(pricing.subtotal)}</p>
+          </div>
+          <div>
+            <p className="text-neutral-500">Admin Fee</p>
+            <p className="mt-1 font-semibold">{formatPrice(pricing.adminFee)}</p>
+          </div>
+          <div>
+            <p className="text-neutral-500">Discount</p>
+            <p className="mt-1 font-semibold text-green-500">
+              {pricing.discount > 0 ? `-${formatPrice(pricing.discount)}` : "—"}
+            </p>
           </div>
         </div>
 

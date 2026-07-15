@@ -22,7 +22,6 @@ export default function PaymentPage({ params, searchParams }: PaymentPageProps) 
   const seatIds = searchParams.seats?.split(",").filter(Boolean) ?? [];
   if (seatIds.length === 0) notFound();
 
-  const total = seatIds.length * showtime.price;
   const ticketHref = `/movie/${movie.id}/e-ticket?showtime=${showtime.id}&seats=${seatIds.join(",")}`;
 
   return (
@@ -39,7 +38,7 @@ export default function PaymentPage({ params, searchParams }: PaymentPageProps) 
           movie={movie}
           showtime={showtime}
           seatIds={seatIds}
-          total={total}
+          pricePerSeat={showtime.price}
         />
         <PaymentMethodSelector ticketHref={ticketHref} />
       </div>

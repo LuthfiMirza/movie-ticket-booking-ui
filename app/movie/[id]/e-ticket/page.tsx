@@ -20,13 +20,16 @@ export default function ETicketPage({ params, searchParams }: ETicketPageProps) 
   const seatIds = searchParams.seats?.split(",").filter(Boolean) ?? [];
   if (seatIds.length === 0) notFound();
 
-  const total = seatIds.length * showtime.price;
-
   return (
     <main className="mx-auto max-w-2xl px-4 py-10 sm:px-6 sm:py-14">
       <BookingSteps currentStep="done" />
 
-      <ETicket movie={movie} showtime={showtime} seatIds={seatIds} total={total} />
+      <ETicket
+        movie={movie}
+        showtime={showtime}
+        seatIds={seatIds}
+        pricePerSeat={showtime.price}
+      />
     </main>
   );
 }
