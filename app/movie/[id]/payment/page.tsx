@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import BookingSteps from "@/components/BookingSteps";
 import { getMovieById, getShowtimesByMovie } from "@/lib/data";
 import OrderSummary from "@/components/OrderSummary";
 import PaymentMethodSelector from "@/components/PaymentMethodSelector";
@@ -26,6 +27,8 @@ export default function PaymentPage({ params, searchParams }: PaymentPageProps) 
 
   return (
     <main className="mx-auto max-w-lg px-4 py-10 sm:px-6 sm:py-14">
+      <BookingSteps currentStep="payment" />
+
       <header className="mb-6 text-center">
         <h1 className="text-2xl font-bold tracking-tight">Payment</h1>
         <ReservationTimer showtimeId={showtime.id} />

@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import BookingSteps from "@/components/BookingSteps";
 import ETicket from "@/components/ETicket";
 import { getMovieById, getShowtimesByMovie } from "@/lib/data";
 
@@ -23,6 +24,8 @@ export default function ETicketPage({ params, searchParams }: ETicketPageProps) 
 
   return (
     <main className="mx-auto max-w-2xl px-4 py-10 sm:px-6 sm:py-14">
+      <BookingSteps currentStep="done" />
+
       <ETicket movie={movie} showtime={showtime} seatIds={seatIds} total={total} />
     </main>
   );

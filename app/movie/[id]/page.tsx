@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import BookingSteps from "@/components/BookingSteps";
 import { getMovieById, getShowtimesByMovie } from "@/lib/data";
 import ShowtimeSelector from "@/components/ShowtimeSelector";
 
@@ -19,6 +20,8 @@ export default function MoviePage({ params, searchParams }: MoviePageProps) {
 
   return (
     <main className="mx-auto max-w-4xl px-4 py-10 sm:px-6 sm:py-14">
+      <BookingSteps currentStep="showtime" />
+
       <div className="flex flex-col gap-6 sm:flex-row">
         <div className="relative aspect-[2/3] w-40 shrink-0 overflow-hidden rounded-lg sm:w-52">
           <Image
