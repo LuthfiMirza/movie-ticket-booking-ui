@@ -105,7 +105,7 @@ export default function SeatSelector({
         <Link
           href={
             selectedSeatIds.length > 0
-              ? `/movie/${movieId}/summary?showtime=${showtimeId}&seats=${selectedSeatIds.join(",")}`
+              ? `/movie/${movieId}/payment?showtime=${showtimeId}&seats=${selectedSeatIds.join(",")}`
               : "#"
           }
           aria-disabled={selectedSeatIds.length === 0}
@@ -115,7 +115,7 @@ export default function SeatSelector({
               : "pointer-events-none bg-neutral-800 text-neutral-500"
           }`}
         >
-          Continue to Summary
+          Continue to Payment
         </Link>
       </div>
     </div>
