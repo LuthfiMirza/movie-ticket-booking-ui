@@ -1,0 +1,123 @@
+"use client";
+
+import { useMemo, useState } from "react";
+import Link from "next/link";
+import type { Showtime } from "@/types";
+
+interface ShowtimeSelectorProps {
+  showtimes: Showtime[];
+}
+
+function formatDateLabel(date: string): string {
+  return new Intl.DateTimeFormat("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+  }).format(new Date(`${date}T00:00:00`));
+}
+
+function formatPrice(price: number): string {
+  return new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    maximumFractionDigits: 0,
+  }).format(price);
+}
+
+export default function ShowtimeSelector({ showtimes }: ShowtimeSelectorProps) {
+  const dates = useMemo(
+    () => Array.from(new Set(showtimes.map((showtime) => showtime.date))).sort(),
+    [showtimes]
+  );
+
+  const [selectedDate, setSelectedDate] = useState(dates[0]);
+  const [selectedShowtimeId, setSelectedShowtimeId] = useState<string | null>(null);
+
+  const showtimesForDate = showtimes
+    .filter((showtime) => showtime.date === selectedDate)
+    .sort((a, b) => a.time.localeCompare(b.time));
+
+  const selectedShowtime = showtimes.find(
+    (showtime) => showtime.id === selectedShowtimeId
+  );
+
+  function handleSelectDate(date: string) {
+    setSelectedDate(date);
+    setSelectedShowtimeId(null);
+  }
+
+  return (
+    <div className="flex flex-col gap-6">
+      <div>
+        <h2 className="mb-3 text-sm font-medium uppercase tracking-widest text-neutral-400">
+          Select Date
+        </h2>
+        <div className="flex flex-wrap gap-2">
+          {dates.map((date) => {
+            const isSelected = date === selectedDate;
+            return (
+              <button
+                key={date}
+                type="button"
+                onClick={() => handleSelectDate(date)}
+                className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
+                  isSelected
+                    ? "bg-red-600 text-white"
+                    : "bg-neutral-800 text-neutral-300 hover:bg-neutral-700"
+                }`}
+              >
+                {formatDateLabel(date)}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <div>
+        <h2 className="mb-3 text-sm font-medium uppercase tracking-widest text-neutral-400">
+          Select Time
+        </h2>
+        <div className="flex flex-wrap gap-2">
+          {showtimesForDate.map((showtime) => {
+            const isSelected = showtime.id === selectedShowtimeId;
+            return (
+              <button
+                key={showtime.id}
+                type="button"
+                onClick={() => setSelectedShowtimeId(showtime.id)}
+                className={`flex flex-col items-start rounded-md border px-4 py-2 text-left transition-colors ${
+                  isSelected
+                    ? "border-red-600 bg-red-600/10"
+                    : "border-neutral-800 bg-neutral-900 hover:border-neutral-700"
+                }`}
+              >
+                <span
+                  className={`text-sm font-semibold ${
+                    isSelected ? "text-red-500" : "text-neutral-100"
+                  }`}
+                >
+                  {showtime.time}
+                </span>
+                <span className="text-xs text-neutral-500">
+                  {showtime.studio} · {formatPrice(showtime.price)}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <Link
+        href={selectedShowtime ? `/movie/${selectedShowtime.movieId}/seats?showtime=${selectedShowtime.id}` : "#"}
+        aria-disabled={!selectedShowtime}
+        className={`mt-2 inline-flex w-fit items-center justify-center rounded-md px-5 py-2.5 text-sm font-medium transition-colors ${
+          selectedShowtime
+            ? "bg-red-600 text-white hover:bg-red-500"
+            : "pointer-events-none bg-neutral-800 text-neutral-500"
+        }`}
+      >
+        Continue to Seats
+      </Link>
+    </div>
+  );
+}
