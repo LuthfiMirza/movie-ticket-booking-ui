@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CineBook — Movie Ticket Booking UI
+
+A front-end movie ticket booking flow built with Next.js 14 (App Router), TypeScript, and Tailwind CSS. Portfolio piece — no backend, no auth, no real payments; the focus is a fully working, defensible React/Next.js UI: movie listing → showtime selection → interactive seat map → order summary → booking confirmation.
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Design process
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Before implementation, low-fidelity wireframes were sketched for the two highest-complexity screens — the movie listing grid and the interactive seat map — to work out layout and state before writing component code:
 
-## Learn More
+- [docs/wireframes/movie-grid.svg](docs/wireframes/movie-grid.svg)
+- [docs/wireframes/seat-map.svg](docs/wireframes/seat-map.svg)
 
-To learn more about Next.js, take a look at the following resources:
+## Component inventory
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Component | Props | Used in |
+|---|---|---|
+| `MovieCard` | `movie: Movie` | Home page (`app/page.tsx`) movie grid |
+| `ShowtimeSelector` | `showtimes: Showtime[]` | Movie detail page (`app/movie/[id]/page.tsx`) |
+| `SeatButton` | `seatId: string`, `status: SeatStatus`, `onClick: () => void` | `SeatSelector` (one per seat in the grid) |
+| `SeatSelector` | `seats: Seat[]`, `rows: string[]`, `pricePerSeat: number`, `movieId: string`, `showtimeId: string` | Seats page (`app/movie/[id]/seats/page.tsx`) |
+| `OrderSummary` | `movie: Movie`, `showtime: Showtime`, `seatIds: string[]`, `total: number` | Summary page (`app/movie/[id]/summary/page.tsx`) |
+| `BookingConfirmation` | `movieTitle: string`, `showtime: Showtime`, `seatIds: string[]`, `total: number` | Summary page, wraps the confirm button + `Modal` |
+| `Modal` | `open: boolean`, `onClose: () => void`, `children: ReactNode` | `BookingConfirmation` (booking confirmation dialog) |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Shared, non-visual modules:
 
-## Deploy on Vercel
+- `lib/data.ts` — mock movies, showtimes, and seat maps, plus lookup helpers (`getMovieById`, `getShowtimesByMovie`, `getSeatMapByShowtime`).
+- `lib/format.ts` — `formatDateLabel` and `formatPrice`, shared by `ShowtimeSelector`, the seats page, `OrderSummary`, and `BookingConfirmation` to keep date/currency formatting consistent.
+- `types/` — `Movie`, `Showtime`, `Studio`, `Seat`, `SeatStatus`, `SeatMap`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Design decisions
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Local component state over Context/Redux.** The booking flow's state is either local to one screen (which seats are selected, which date tab is active) or naturally expressed as URL state (`showtime` and `seats` query params carry the selection from the seats page to the summary page). Nothing needs to be shared across distant parts of the tree at the same time, so a global store would add indirection without solving a real problem here. If a future step needed the in-progress booking to survive a refresh or be shared across unrelated routes, that would be the trigger to revisit this.
+
+**Seat status derived at render time, not stored as selected.** The mock seat map only encodes ground truth: `available` or `booked`. `SeatSelector` holds the set of selected seat IDs in `useState` and computes the seat's *displayed* status (`selected` vs the mock data's status) on each render. This keeps the mock data a pure fixture and avoids two sources of truth for the same seat.
+
+**Route-driven flow instead of a wizard component.** Each booking step is its own route (`/movie/[id]`, `/movie/[id]/seats`, `/movie/[id]/summary`) rather than one client component swapping steps internally. This makes each step deep-linkable and keeps data-fetching in server components close to where it's used, which is the idiomatic App Router pattern rather than a Blade/Livewire-style single-controller flow.
+
+## Non-goals
+
+No real payment integration, authentication, or backend/database — this is a front-end evidence piece, scoped to stay fully defensible under interview questioning.
