@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { formatDateLabel, formatPrice } from "@/lib/format";
+import { clearReservation } from "@/lib/reservation";
 import type { Movie, Showtime } from "@/types";
 
 interface ETicketProps {
@@ -26,6 +27,10 @@ export default function ETicket({
   total,
 }: ETicketProps) {
   const [bookingReference] = useState(() => generateBookingReference());
+
+  useEffect(() => {
+    clearReservation(showtime.id);
+  }, [showtime.id]);
 
   return (
     <div className="overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900 shadow-2xl shadow-black/20">

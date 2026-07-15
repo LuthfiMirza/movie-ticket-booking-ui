@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getMovieById, getShowtimesByMovie, getSeatMapByShowtime } from "@/lib/data";
 import { formatDateLabel, formatPrice } from "@/lib/format";
+import ReservationTimer from "@/components/ReservationTimer";
 import SeatSelector from "@/components/SeatSelector";
 
 interface SeatsPageProps {
@@ -28,6 +29,7 @@ export default function SeatsPage({ params, searchParams }: SeatsPageProps) {
           {formatDateLabel(showtime.date)} · {showtime.time} · {showtime.studio} ·{" "}
           {formatPrice(showtime.price)} / seat
         </p>
+        <ReservationTimer showtimeId={showtime.id} />
       </header>
 
       <SeatSelector
