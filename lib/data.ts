@@ -1,4 +1,11 @@
-import type { Movie, Showtime, Seat, SeatMap } from "@/types";
+import type { Cinema, Movie, Showtime, Seat, SeatMap } from "@/types";
+
+export const cinemas: Cinema[] = [
+  { id: "c1", city: "Jakarta", name: "CineBook Grand Indonesia" },
+  { id: "c2", city: "Jakarta", name: "CineBook Plaza Senayan" },
+  { id: "c3", city: "Bandung", name: "CineBook Paris Van Java" },
+  { id: "c4", city: "Bandung", name: "CineBook Braga Citywalk" },
+];
 
 export const movies: Movie[] = [
   {
@@ -64,18 +71,18 @@ export const movies: Movie[] = [
 ];
 
 export const showtimes: Showtime[] = [
-  { id: "s1", movieId: "m1", date: "2026-07-16", time: "13:00", studio: "Studio 1", price: 45000 },
-  { id: "s2", movieId: "m1", date: "2026-07-16", time: "16:30", studio: "IMAX", price: 75000 },
-  { id: "s3", movieId: "m1", date: "2026-07-17", time: "19:45", studio: "Studio 2", price: 45000 },
-  { id: "s4", movieId: "m2", date: "2026-07-16", time: "14:15", studio: "Studio 3", price: 45000 },
-  { id: "s5", movieId: "m2", date: "2026-07-17", time: "20:00", studio: "Premiere", price: 90000 },
-  { id: "s6", movieId: "m3", date: "2026-07-16", time: "11:30", studio: "Studio 2", price: 40000 },
-  { id: "s7", movieId: "m3", date: "2026-07-17", time: "17:00", studio: "Studio 1", price: 40000 },
-  { id: "s8", movieId: "m4", date: "2026-07-16", time: "18:30", studio: "Studio 3", price: 45000 },
-  { id: "s9", movieId: "m5", date: "2026-07-16", time: "21:15", studio: "Studio 1", price: 45000 },
-  { id: "s10", movieId: "m5", date: "2026-07-17", time: "22:00", studio: "IMAX", price: 75000 },
-  { id: "s11", movieId: "m6", date: "2026-07-16", time: "10:00", studio: "Studio 2", price: 40000 },
-  { id: "s12", movieId: "m6", date: "2026-07-17", time: "13:30", studio: "Studio 2", price: 40000 },
+  { id: "s1", movieId: "m1", cinemaId: "c1", date: "2026-07-16", time: "13:00", studio: "Studio 1", price: 45000 },
+  { id: "s2", movieId: "m1", cinemaId: "c2", date: "2026-07-16", time: "16:30", studio: "IMAX", price: 75000 },
+  { id: "s3", movieId: "m1", cinemaId: "c3", date: "2026-07-17", time: "19:45", studio: "Studio 2", price: 45000 },
+  { id: "s4", movieId: "m2", cinemaId: "c1", date: "2026-07-16", time: "14:15", studio: "Studio 3", price: 45000 },
+  { id: "s5", movieId: "m2", cinemaId: "c4", date: "2026-07-17", time: "20:00", studio: "Premiere", price: 90000 },
+  { id: "s6", movieId: "m3", cinemaId: "c2", date: "2026-07-16", time: "11:30", studio: "Studio 2", price: 40000 },
+  { id: "s7", movieId: "m3", cinemaId: "c3", date: "2026-07-17", time: "17:00", studio: "Studio 1", price: 40000 },
+  { id: "s8", movieId: "m4", cinemaId: "c4", date: "2026-07-16", time: "18:30", studio: "Studio 3", price: 45000 },
+  { id: "s9", movieId: "m5", cinemaId: "c1", date: "2026-07-16", time: "21:15", studio: "Studio 1", price: 45000 },
+  { id: "s10", movieId: "m5", cinemaId: "c2", date: "2026-07-17", time: "22:00", studio: "IMAX", price: 75000 },
+  { id: "s11", movieId: "m6", cinemaId: "c3", date: "2026-07-16", time: "10:00", studio: "Studio 2", price: 40000 },
+  { id: "s12", movieId: "m6", cinemaId: "c4", date: "2026-07-17", time: "13:30", studio: "Studio 2", price: 40000 },
 ];
 
 const SEAT_ROWS = ["A", "B", "C", "D", "E", "F"];
@@ -125,6 +132,19 @@ export function getMovieById(id: string): Movie | undefined {
 
 export function getShowtimesByMovie(movieId: string): Showtime[] {
   return showtimes.filter((showtime) => showtime.movieId === movieId);
+}
+
+export function getCinemasByCity(city: string): Cinema[] {
+  return cinemas.filter((cinema) => cinema.city === city);
+}
+
+export function getShowtimesByMovieAndCinema(
+  movieId: string,
+  cinemaId: string
+): Showtime[] {
+  return showtimes.filter(
+    (showtime) => showtime.movieId === movieId && showtime.cinemaId === cinemaId
+  );
 }
 
 export function getSeatMapByShowtime(showtimeId: string): SeatMap | undefined {
