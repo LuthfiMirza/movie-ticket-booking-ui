@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import type { Seat } from "@/types";
 import { formatPrice } from "@/lib/format";
+import { suggestBestSeats } from "@/lib/seat-suggestion";
 import SeatButton from "@/components/SeatButton";
 
 interface SeatSelectorProps {
@@ -24,6 +25,7 @@ export default function SeatSelector({
   showtimeId,
 }: SeatSelectorProps) {
   const [selectedSeatIds, setSelectedSeatIds] = useState<string[]>([]);
+  const [autoPickCount, setAutoPickCount] = useState(2);
   const [validationMessage, setValidationMessage] = useState<string | null>(null);
 
   function toggleSeat(seat: Seat) {
@@ -42,6 +44,19 @@ export default function SeatSelector({
     });
   }
 
+  function handleAutoPick() {
+    const nextSeatIds = suggestBestSeats(seats, rows, autoPickCount);
+
+    if (nextSeatIds.length === 0) {
+      setValidationMessage("No adjacent seats available for that amount.");
+      setSelectedSeatIds([]);
+      return;
+    }
+
+    setValidationMessage(null);
+    setSelectedSeatIds(nextSeatIds);
+  }
+
   const total = selectedSeatIds.length * pricePerSeat;
   const seatsByRow = rows.map((row) =>
     seats.filter((seat) => seat.row === row).sort((a, b) => a.column - b.column)
@@ -51,6 +66,29 @@ export default function SeatSelector({
     <div className="flex flex-col gap-6">
       <div className="flex flex-col items-center gap-4">
         <div className="mb-2 h-1.5 w-2/3 max-w-sm rounded-full bg-neutral-800" />
+        <div className="flex w-full flex-col gap-3 rounded-lg border border-neutral-800 bg-neutral-900 p-4 sm:flex-row sm:items-end sm:justify-between">
+          <label className="flex flex-col gap-1 text-sm font-medium text-neutral-300">
+            Jumlah kursi otomatis
+            <input
+              type="number"
+              min={1}
+              max={MAX_SEATS}
+              value={autoPickCount}
+              onChange={(event) => {
+                const value = Number(event.target.value);
+                setAutoPickCount(Math.min(Math.max(value, 1), MAX_SEATS));
+              }}
+              className="w-24 rounded-md border border-neutral-700 bg-neutral-950 px-3 py-2 text-sm text-neutral-100 outline-none transition-colors focus:border-red-600"
+            />
+          </label>
+          <button
+            type="button"
+            onClick={handleAutoPick}
+            className="inline-flex items-center justify-center rounded-md bg-neutral-800 px-4 py-2 text-sm font-medium text-neutral-100 transition-colors hover:bg-neutral-700"
+          >
+            Pilih Otomatis
+          </button>
+        </div>
         <div className="w-full overflow-x-auto pb-2">
           <div className="mx-auto flex w-max flex-col gap-1.5">
           {seatsByRow.map((rowSeats, index) => (
