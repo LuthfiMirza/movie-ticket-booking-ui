@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const PAYMENT_METHODS = [
   {
@@ -20,12 +21,20 @@ const PAYMENT_METHODS = [
   },
 ] as const;
 
-export default function PaymentMethodSelector() {
+interface PaymentMethodSelectorProps {
+  ticketHref: string;
+}
+
+export default function PaymentMethodSelector({
+  ticketHref,
+}: PaymentMethodSelectorProps) {
+  const router = useRouter();
   const [selectedMethod, setSelectedMethod] = useState<string | null>(null);
 
   function handlePayNow() {
-    // TODO: Redirect to e-ticket page after Phase 9 is implemented.
-    console.log("Pay now", { paymentMethod: selectedMethod });
+    if (!selectedMethod) return;
+
+    router.push(ticketHref);
   }
 
   return (

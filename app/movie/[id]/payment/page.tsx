@@ -21,6 +21,7 @@ export default function PaymentPage({ params, searchParams }: PaymentPageProps) 
   if (seatIds.length === 0) notFound();
 
   const total = seatIds.length * showtime.price;
+  const ticketHref = `/movie/${movie.id}/e-ticket?showtime=${showtime.id}&seats=${seatIds.join(",")}`;
 
   return (
     <main className="mx-auto max-w-lg px-4 py-10 sm:px-6 sm:py-14">
@@ -33,7 +34,7 @@ export default function PaymentPage({ params, searchParams }: PaymentPageProps) 
           seatIds={seatIds}
           total={total}
         />
-        <PaymentMethodSelector />
+        <PaymentMethodSelector ticketHref={ticketHref} />
       </div>
     </main>
   );
