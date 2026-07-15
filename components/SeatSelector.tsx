@@ -61,17 +61,19 @@ export default function SeatSelector({
                     ? "selected"
                     : seat.status;
                   return (
-                    <SeatButton
-                      key={seat.id}
-                      seatId={seat.id}
-                      status={status}
-                      onClick={() => toggleSeat(seat)}
-                    />
+                    <div key={seat.id} className={seat.column === 5 ? "ml-3" : ""}>
+                      <SeatButton
+                        seatId={seat.id}
+                        status={status}
+                        onClick={() => toggleSeat(seat)}
+                      />
+                    </div>
                   );
                 })}
               </div>
             </div>
           ))}
+          </div>
         </div>
       </div>
 
