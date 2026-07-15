@@ -1,20 +1,25 @@
+import MovieCard from "@/components/MovieCard";
+import { movies } from "@/lib/data";
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-6 p-8 text-center">
-      <span className="rounded-full border border-neutral-700 px-3 py-1 text-xs font-medium uppercase tracking-widest text-neutral-400">
-        Phase 0 · Scaffold
-      </span>
-      <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">CineBook</h1>
-      <p className="max-w-md text-balance text-neutral-400">
-        A movie ticket booking UI built with Next.js 14, TypeScript, and
-        Tailwind CSS. Movie listing, showtimes, and an interactive seat map are
-        on the way.
-      </p>
-      <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-neutral-500">
-        <span className="rounded bg-neutral-800 px-2 py-1">Next.js 14</span>
-        <span className="rounded bg-neutral-800 px-2 py-1">TypeScript</span>
-        <span className="rounded bg-neutral-800 px-2 py-1">Tailwind CSS</span>
-        <span className="rounded bg-neutral-800 px-2 py-1">App Router</span>
+    <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
+      <header className="mb-8 flex flex-col gap-2">
+        <span className="w-fit rounded-full border border-neutral-700 px-3 py-1 text-xs font-medium uppercase tracking-widest text-neutral-400">
+          Now Showing
+        </span>
+        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+          CineBook
+        </h1>
+        <p className="max-w-lg text-neutral-400">
+          Pick a movie, choose your showtime, and reserve your seats.
+        </p>
+      </header>
+
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4 lg:gap-6">
+        {movies.map((movie) => (
+          <MovieCard key={movie.id} movie={movie} />
+        ))}
       </div>
     </main>
   );
