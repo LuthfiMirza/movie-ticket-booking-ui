@@ -150,3 +150,9 @@ export function getShowtimesByMovieAndCinema(
 export function getSeatMapByShowtime(showtimeId: string): SeatMap | undefined {
   return seatMaps.find((seatMap) => seatMap.showtimeId === showtimeId);
 }
+
+export function isShowtimeSoldOut(showtimeId: string): boolean {
+  const seatMap = getSeatMapByShowtime(showtimeId);
+
+  return seatMap ? seatMap.seats.every((seat) => seat.status === "booked") : false;
+}
