@@ -3,25 +3,10 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import type { Showtime } from "@/types";
+import { formatDateLabel, formatPrice } from "@/lib/format";
 
 interface ShowtimeSelectorProps {
   showtimes: Showtime[];
-}
-
-function formatDateLabel(date: string): string {
-  return new Intl.DateTimeFormat("en-US", {
-    weekday: "short",
-    month: "short",
-    day: "numeric",
-  }).format(new Date(`${date}T00:00:00`));
-}
-
-function formatPrice(price: number): string {
-  return new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-    maximumFractionDigits: 0,
-  }).format(price);
 }
 
 export default function ShowtimeSelector({ showtimes }: ShowtimeSelectorProps) {
