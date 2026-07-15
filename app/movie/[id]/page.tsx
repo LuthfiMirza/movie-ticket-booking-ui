@@ -5,9 +5,10 @@ import ShowtimeSelector from "@/components/ShowtimeSelector";
 
 interface MoviePageProps {
   params: { id: string };
+  searchParams: { expired?: string };
 }
 
-export default function MoviePage({ params }: MoviePageProps) {
+export default function MoviePage({ params, searchParams }: MoviePageProps) {
   const movie = getMovieById(params.id);
 
   if (!movie) {
@@ -48,6 +49,11 @@ export default function MoviePage({ params }: MoviePageProps) {
       </div>
 
       <div className="mt-10 border-t border-neutral-800 pt-8">
+        {searchParams.expired === "1" && (
+          <div className="mb-6 rounded-md border border-red-600/40 bg-red-600/10 px-4 py-3 text-sm text-red-300">
+            Sesi reservasi sebelumnya sudah habis, silakan pilih ulang.
+          </div>
+        )}
         <ShowtimeSelector showtimes={showtimes} />
       </div>
     </main>
