@@ -4,7 +4,7 @@ export const movies: Movie[] = [
   {
     id: "m1",
     title: "Nebula Drift",
-    posterUrl: "https://placehold.co/300x450/1a1a2e/fff?text=Nebula+Drift",
+    posterUrl: "https://placehold.co/300x450/1a1a2e/fff.png?text=Nebula+Drift",
     genres: ["Sci-Fi", "Adventure"],
     durationMinutes: 128,
     synopsis:
@@ -14,7 +14,7 @@ export const movies: Movie[] = [
   {
     id: "m2",
     title: "The Last Ember",
-    posterUrl: "https://placehold.co/300x450/2e1a1a/fff?text=The+Last+Ember",
+    posterUrl: "https://placehold.co/300x450/2e1a1a/fff.png?text=The+Last+Ember",
     genres: ["Drama", "War"],
     durationMinutes: 141,
     synopsis:
@@ -24,7 +24,7 @@ export const movies: Movie[] = [
   {
     id: "m3",
     title: "Paper Tigers",
-    posterUrl: "https://placehold.co/300x450/1a2e1a/fff?text=Paper+Tigers",
+    posterUrl: "https://placehold.co/300x450/1a2e1a/fff.png?text=Paper+Tigers",
     genres: ["Comedy"],
     durationMinutes: 102,
     synopsis:
@@ -34,7 +34,7 @@ export const movies: Movie[] = [
   {
     id: "m4",
     title: "Glass Horizon",
-    posterUrl: "https://placehold.co/300x450/2e2a1a/fff?text=Glass+Horizon",
+    posterUrl: "https://placehold.co/300x450/2e2a1a/fff.png?text=Glass+Horizon",
     genres: ["Thriller", "Mystery"],
     durationMinutes: 115,
     synopsis:
@@ -44,7 +44,7 @@ export const movies: Movie[] = [
   {
     id: "m5",
     title: "Midnight Orchard",
-    posterUrl: "https://placehold.co/300x450/241a2e/fff?text=Midnight+Orchard",
+    posterUrl: "https://placehold.co/300x450/241a2e/fff.png?text=Midnight+Orchard",
     genres: ["Horror"],
     durationMinutes: 97,
     synopsis:
@@ -54,7 +54,7 @@ export const movies: Movie[] = [
   {
     id: "m6",
     title: "Coral & Compass",
-    posterUrl: "https://placehold.co/300x450/1a2e2a/fff?text=Coral+%26+Compass",
+    posterUrl: "https://placehold.co/300x450/1a2e2a/fff.png?text=Coral+%26+Compass",
     genres: ["Animation", "Family"],
     durationMinutes: 94,
     synopsis:
