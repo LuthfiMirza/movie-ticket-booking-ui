@@ -1,8 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import type { Showtime } from "@/types";
+import { LOCATION_STORAGE_KEY } from "@/components/LocationPicker";
+import { cinemas } from "@/lib/data";
 import { formatDateLabel, formatPrice } from "@/lib/format";
 
 interface ShowtimeSelectorProps {
@@ -10,21 +12,49 @@ interface ShowtimeSelectorProps {
 }
 
 export default function ShowtimeSelector({ showtimes }: ShowtimeSelectorProps) {
+  const [selectedCinemaId, setSelectedCinemaId] = useState(cinemas[0]?.id ?? "");
+
+  useEffect(() => {
+    const storedLocation = window.localStorage.getItem(LOCATION_STORAGE_KEY);
+    if (!storedLocation) return;
+
+    try {
+      const parsedLocation = JSON.parse(storedLocation) as { cinemaId?: string };
+      if (parsedLocation.cinemaId) {
+        setSelectedCinemaId(parsedLocation.cinemaId);
+      }
+    } catch {
+      setSelectedCinemaId(cinemas[0]?.id ?? "");
+    }
+  }, []);
+
+  const filteredShowtimes = useMemo(
+    () => showtimes.filter((showtime) => showtime.cinemaId === selectedCinemaId),
+    [selectedCinemaId, showtimes]
+  );
+
   const dates = useMemo(
-    () => Array.from(new Set(showtimes.map((showtime) => showtime.date))).sort(),
-    [showtimes]
+    () => Array.from(new Set(filteredShowtimes.map((showtime) => showtime.date))).sort(),
+    [filteredShowtimes]
   );
 
   const [selectedDate, setSelectedDate] = useState(dates[0]);
   const [selectedShowtimeId, setSelectedShowtimeId] = useState<string | null>(null);
 
-  const showtimesForDate = showtimes
+  useEffect(() => {
+    setSelectedDate(dates[0]);
+    setSelectedShowtimeId(null);
+  }, [dates]);
+
+  const showtimesForDate = filteredShowtimes
     .filter((showtime) => showtime.date === selectedDate)
     .sort((a, b) => a.time.localeCompare(b.time));
 
-  const selectedShowtime = showtimes.find(
+  const selectedShowtime = filteredShowtimes.find(
     (showtime) => showtime.id === selectedShowtimeId
   );
+
+  const selectedCinema = cinemas.find((cinema) => cinema.id === selectedCinemaId);
 
   function handleSelectDate(date: string) {
     setSelectedDate(date);
@@ -33,76 +63,88 @@ export default function ShowtimeSelector({ showtimes }: ShowtimeSelectorProps) {
 
   return (
     <div className="flex flex-col gap-6">
-      <div>
-        <h2 className="mb-3 text-sm font-medium uppercase tracking-widest text-neutral-400">
-          Select Date
-        </h2>
-        <div className="flex flex-wrap gap-2">
-          {dates.map((date) => {
-            const isSelected = date === selectedDate;
-            return (
-              <button
-                key={date}
-                type="button"
-                onClick={() => handleSelectDate(date)}
-                className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
-                  isSelected
-                    ? "bg-red-600 text-white"
-                    : "bg-neutral-800 text-neutral-300 hover:bg-neutral-700"
-                }`}
-              >
-                {formatDateLabel(date)}
-              </button>
-            );
-          })}
+      {filteredShowtimes.length === 0 && (
+        <div className="rounded-md border border-neutral-800 bg-neutral-900 px-4 py-3 text-sm text-neutral-400">
+          Tidak ada jadwal di bioskop ini
+          {selectedCinema ? ` (${selectedCinema.name})` : ""}. Silakan ganti bioskop
+          dari halaman utama.
         </div>
-      </div>
+      )}
 
-      <div>
-        <h2 className="mb-3 text-sm font-medium uppercase tracking-widest text-neutral-400">
-          Select Time
-        </h2>
-        <div className="flex flex-wrap gap-2">
-          {showtimesForDate.map((showtime) => {
-            const isSelected = showtime.id === selectedShowtimeId;
-            return (
-              <button
-                key={showtime.id}
-                type="button"
-                onClick={() => setSelectedShowtimeId(showtime.id)}
-                className={`flex flex-col items-start rounded-md border px-4 py-2 text-left transition-colors ${
-                  isSelected
-                    ? "border-red-600 bg-red-600/10"
-                    : "border-neutral-800 bg-neutral-900 hover:border-neutral-700"
-                }`}
-              >
-                <span
-                  className={`text-sm font-semibold ${
-                    isSelected ? "text-red-500" : "text-neutral-100"
-                  }`}
-                >
-                  {showtime.time}
-                </span>
-                <span className="text-xs text-neutral-500">
-                  {showtime.studio} · {formatPrice(showtime.price)}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
+      {filteredShowtimes.length > 0 && (
+        <>
+          <div>
+            <h2 className="mb-3 text-sm font-medium uppercase tracking-widest text-neutral-400">
+              Select Date
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {dates.map((date) => {
+                const isSelected = date === selectedDate;
+                return (
+                  <button
+                    key={date}
+                    type="button"
+                    onClick={() => handleSelectDate(date)}
+                    className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
+                      isSelected
+                        ? "bg-red-600 text-white"
+                        : "bg-neutral-800 text-neutral-300 hover:bg-neutral-700"
+                    }`}
+                  >
+                    {formatDateLabel(date)}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
 
-      <Link
-        href={selectedShowtime ? `/movie/${selectedShowtime.movieId}/seats?showtime=${selectedShowtime.id}` : "#"}
-        aria-disabled={!selectedShowtime}
-        className={`mt-2 inline-flex w-fit items-center justify-center rounded-md px-5 py-2.5 text-sm font-medium transition-colors ${
-          selectedShowtime
-            ? "bg-red-600 text-white hover:bg-red-500"
-            : "pointer-events-none bg-neutral-800 text-neutral-500"
-        }`}
-      >
-        Continue to Seats
-      </Link>
+          <div>
+            <h2 className="mb-3 text-sm font-medium uppercase tracking-widest text-neutral-400">
+              Select Time
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {showtimesForDate.map((showtime) => {
+                const isSelected = showtime.id === selectedShowtimeId;
+                return (
+                  <button
+                    key={showtime.id}
+                    type="button"
+                    onClick={() => setSelectedShowtimeId(showtime.id)}
+                    className={`flex flex-col items-start rounded-md border px-4 py-2 text-left transition-colors ${
+                      isSelected
+                        ? "border-red-600 bg-red-600/10"
+                        : "border-neutral-800 bg-neutral-900 hover:border-neutral-700"
+                    }`}
+                  >
+                    <span
+                      className={`text-sm font-semibold ${
+                        isSelected ? "text-red-500" : "text-neutral-100"
+                      }`}
+                    >
+                      {showtime.time}
+                    </span>
+                    <span className="text-xs text-neutral-500">
+                      {showtime.studio} · {formatPrice(showtime.price)}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <Link
+            href={selectedShowtime ? `/movie/${selectedShowtime.movieId}/seats?showtime=${selectedShowtime.id}` : "#"}
+            aria-disabled={!selectedShowtime}
+            className={`mt-2 inline-flex w-fit items-center justify-center rounded-md px-5 py-2.5 text-sm font-medium transition-colors ${
+              selectedShowtime
+                ? "bg-red-600 text-white hover:bg-red-500"
+                : "pointer-events-none bg-neutral-800 text-neutral-500"
+            }`}
+          >
+            Continue to Seats
+          </Link>
+        </>
+      )}
     </div>
   );
 }
