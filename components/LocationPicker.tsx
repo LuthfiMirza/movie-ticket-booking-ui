@@ -73,16 +73,16 @@ export default function LocationPicker() {
   }
 
   return (
-    <div className="flex flex-col gap-2 rounded-2xl border border-white/60 bg-white/50 p-3 shadow-sm backdrop-blur-xl sm:flex-row sm:items-center">
+    <div className="flex flex-col gap-2 rounded-2xl border border-brand/15 bg-white/[0.04] p-3 backdrop-blur-xl sm:flex-row sm:items-center">
       <label className="flex flex-col gap-1 text-xs font-medium uppercase tracking-widest text-neutral-500">
         City
         <select
           value={selectedLocation.city}
           onChange={(event) => handleCityChange(event.target.value)}
-          className="rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm font-medium normal-case tracking-normal text-neutral-800 outline-none transition-colors focus:border-brand"
+          className="rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-sm font-medium normal-case tracking-normal text-neutral-100 outline-none transition-colors focus:border-brand"
         >
           {cities.map((city) => (
-            <option key={city} value={city}>
+            <option key={city} value={city} className="bg-neutral-900 text-neutral-100">
               {city}
             </option>
           ))}
@@ -94,10 +94,10 @@ export default function LocationPicker() {
         <select
           value={selectedLocation.cinemaId}
           onChange={(event) => handleCinemaChange(event.target.value)}
-          className="rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm font-medium normal-case tracking-normal text-neutral-800 outline-none transition-colors focus:border-brand"
+          className="rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-sm font-medium normal-case tracking-normal text-neutral-100 outline-none transition-colors focus:border-brand"
         >
           {cityCinemas.map((cinema) => (
-            <option key={cinema.id} value={cinema.id}>
+            <option key={cinema.id} value={cinema.id} className="bg-neutral-900 text-neutral-100">
               {cinema.name}
             </option>
           ))}
