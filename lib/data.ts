@@ -18,6 +18,11 @@ export const movies: Movie[] = [
     synopsis:
       "A salvage crew stranded at the edge of known space must outrun a collapsing star.",
     rating: "PG-13",
+    cast: [
+      { name: "Mara Solene", role: "Capt. Vey" },
+      { name: "Idris Kane", role: "Bo" },
+      { name: "Talia Wren", role: "Nyx" },
+    ],
   },
   {
     id: "m2",
@@ -28,6 +33,10 @@ export const movies: Movie[] = [
     synopsis:
       "Two estranged brothers reunite on the front line of a war neither of them chose.",
     rating: "R",
+    cast: [
+      { name: "Adrian Voss", role: "Elias" },
+      { name: "Marcus Doyle", role: "Samuel" },
+    ],
   },
   {
     id: "m3",
@@ -38,6 +47,11 @@ export const movies: Movie[] = [
     synopsis:
       "A washed-up boy band reunites for one last show, whether the city wants it or not.",
     rating: "PG",
+    cast: [
+      { name: "Jonah Pryce", role: "Dex" },
+      { name: "Remy Solace", role: "Kit" },
+      { name: "Ezra Vance", role: "Milo" },
+    ],
   },
   {
     id: "m4",
@@ -48,6 +62,10 @@ export const movies: Movie[] = [
     synopsis:
       "A detective's last case unravels a conspiracy hiding in plain sight.",
     rating: "PG-13",
+    cast: [
+      { name: "Selene Marlowe", role: "Det. Reyes" },
+      { name: "Owen Castellan", role: "The Broker" },
+    ],
   },
   {
     id: "m5",
@@ -58,6 +76,10 @@ export const movies: Movie[] = [
     synopsis:
       "A family inherits an orchard that only blooms after dark, for reasons best left buried.",
     rating: "R",
+    cast: [
+      { name: "Corinne Ashby", role: "Mother" },
+      { name: "Hollis Vane", role: "The Keeper" },
+    ],
   },
   {
     id: "m6",
@@ -68,6 +90,10 @@ export const movies: Movie[] = [
     synopsis:
       "A young cartographer maps a reef that keeps redrawing itself overnight.",
     rating: "G",
+    cast: [
+      { name: "Nadia Bloom", role: "Wren (voice)" },
+      { name: "Toby Marchetti", role: "Capt. Finch (voice)" },
+    ],
   },
 ];
 

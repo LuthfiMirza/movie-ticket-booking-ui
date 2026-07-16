@@ -1,3 +1,8 @@
+export interface CastMember {
+  name: string;
+  role: string;
+}
+
 export interface Movie {
   id: string;
   title: string;
@@ -6,4 +11,5 @@ export interface Movie {
   durationMinutes: number;
   synopsis: string;
   rating: string;
+  cast: CastMember[];
 }
