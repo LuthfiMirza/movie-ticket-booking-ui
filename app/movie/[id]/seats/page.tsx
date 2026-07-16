@@ -24,7 +24,10 @@ export default function SeatsPage({ params, searchParams }: SeatsPageProps) {
 
   return (
     <main className="mx-auto max-w-2xl px-4 pb-36 pt-10 sm:px-6 sm:pb-32 sm:pt-14">
-      <BookingSteps currentStep="seats" />
+      <BookingSteps
+        currentStep="seats"
+        stepHrefs={{ showtime: `/movie/${movie.id}` }}
+      />
 
       <header className="mb-8 text-center">
         <h1 className="text-2xl font-bold tracking-tight">{movie.title}</h1>

@@ -24,8 +24,14 @@ export default function PaymentPage({ params, searchParams }: PaymentPageProps) 
   const baseTicketHref = `/movie/${movie.id}/e-ticket?showtime=${showtime.id}&seats=${seatIds.join(",")}`;
 
   return (
-    <main className="mx-auto max-w-lg px-4 py-10 sm:px-6 sm:py-14">
-      <BookingSteps currentStep="payment" />
+    <main className="mx-auto max-w-lg px-4 pb-28 pt-10 sm:px-6 sm:pb-24 sm:pt-14">
+      <BookingSteps
+        currentStep="payment"
+        stepHrefs={{
+          showtime: `/movie/${movie.id}`,
+          seats: `/movie/${movie.id}/seats?showtime=${showtime.id}`,
+        }}
+      />
 
       <header className="mb-6 text-center">
         <h1 className="text-2xl font-bold tracking-tight">Payment</h1>
