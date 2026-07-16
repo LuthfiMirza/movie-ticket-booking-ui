@@ -54,7 +54,7 @@ export default function ShowtimeSelector({ showtimes }: ShowtimeSelectorProps) {
   return (
     <div className="flex flex-col gap-6">
       {filteredShowtimes.length === 0 && (
-        <div className="rounded-2xl border border-white/60 bg-white/50 px-4 py-3 text-sm text-neutral-500 backdrop-blur-xl">
+        <div className="rounded-2xl border border-brand/15 bg-white/[0.04] px-4 py-3 text-sm text-neutral-400 backdrop-blur-xl">
           Tidak ada jadwal di bioskop ini
           {selectedCinema ? ` (${selectedCinema.name})` : ""}. Silakan ganti bioskop
           dari halaman utama.
@@ -77,8 +77,8 @@ export default function ShowtimeSelector({ showtimes }: ShowtimeSelectorProps) {
                     onClick={() => handleSelectDate(date)}
                     className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                       isSelected
-                        ? "bg-brand text-white"
-                        : "border border-neutral-200 bg-white/60 text-neutral-600 hover:border-brand/40"
+                        ? "bg-gradient-to-br from-brand-light to-brand text-brand-ink"
+                        : "border border-white/10 bg-white/[0.03] text-neutral-300 hover:border-brand/40"
                     }`}
                   >
                     {formatDateLabel(date)}
@@ -104,19 +104,19 @@ export default function ShowtimeSelector({ showtimes }: ShowtimeSelectorProps) {
                     disabled={isSoldOut}
                     className={`flex flex-col items-start rounded-xl border px-4 py-2 text-left backdrop-blur-xl transition-colors ${
                       isSoldOut
-                        ? "cursor-not-allowed border-neutral-200 bg-white/30 opacity-60"
+                        ? "cursor-not-allowed border-white/5 bg-white/[0.02] opacity-60"
                         : isSelected
-                        ? "border-brand bg-brand-light/20"
-                        : "border-white/60 bg-white/50 hover:border-brand/40"
+                        ? "border-brand bg-brand-light/10"
+                        : "border-white/10 bg-white/[0.03] hover:border-brand/40"
                     }`}
                   >
                     <span
                       className={`text-sm font-semibold ${
                         isSoldOut
-                          ? "text-neutral-400"
+                          ? "text-neutral-600"
                           : isSelected
-                            ? "text-brand-dark"
-                            : "text-neutral-800"
+                            ? "text-brand-light"
+                            : "text-neutral-100"
                       }`}
                     >
                       {showtime.time}
@@ -133,10 +133,10 @@ export default function ShowtimeSelector({ showtimes }: ShowtimeSelectorProps) {
           <Link
             href={selectedShowtime ? `/movie/${selectedShowtime.movieId}/seats?showtime=${selectedShowtime.id}` : "#"}
             aria-disabled={!selectedShowtime}
-            className={`mt-2 inline-flex w-fit items-center justify-center rounded-full px-5 py-2.5 text-sm font-medium transition-colors ${
+            className={`mt-2 inline-flex w-fit items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold transition-opacity ${
               selectedShowtime
-                ? "bg-brand text-white hover:bg-brand-dark"
-                : "pointer-events-none bg-neutral-200 text-neutral-400"
+                ? "bg-gradient-to-br from-brand-light to-brand text-brand-ink hover:opacity-90"
+                : "pointer-events-none bg-white/[0.05] text-neutral-600"
             }`}
           >
             Continue to Seats
