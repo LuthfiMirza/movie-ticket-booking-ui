@@ -30,8 +30,8 @@ export default function SeatsPage({ params, searchParams }: SeatsPageProps) {
       />
 
       <header className="mb-8 text-center">
-        <h1 className="text-2xl font-bold tracking-tight">{movie.title}</h1>
-        <p className="mt-1 text-sm text-neutral-400">
+        <h1 className="font-serif text-2xl font-semibold tracking-tight text-neutral-800">{movie.title}</h1>
+        <p className="mt-1 text-sm text-neutral-500">
           {formatDateLabel(showtime.date)} · {showtime.time} · {showtime.studio} ·{" "}
           {formatPrice(showtime.price)} / seat
         </p>

@@ -67,10 +67,10 @@ export default function ReservationTimer({
   return (
     <div
       aria-live="polite"
-      className={`mx-auto mt-4 w-fit rounded-full border px-3 py-1 text-xs font-medium uppercase tracking-widest ${
+      className={`mx-auto mt-4 w-fit rounded-full border px-3 py-1 text-xs font-medium uppercase tracking-widest backdrop-blur-xl ${
         isUrgent
-          ? "border-red-600 bg-red-600/15 text-red-400"
-          : "border-neutral-700 bg-neutral-900 text-neutral-400"
+          ? "border-red-300 bg-red-50/80 text-red-600"
+          : "border-white/60 bg-white/50 text-neutral-500"
       }`}
     >
       {isActive ? `Reservation ${formatRemainingTime(remainingSeconds)}` : "Select a seat to start your reservation"}

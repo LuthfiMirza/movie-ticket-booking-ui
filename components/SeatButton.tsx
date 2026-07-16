@@ -8,9 +8,9 @@ interface SeatButtonProps {
 
 const STATUS_CLASSES: Record<SeatStatus, string> = {
   available:
-    "border-neutral-700 bg-neutral-900 text-neutral-300 hover:border-neutral-500 hover:bg-neutral-800",
-  selected: "border-red-600 bg-red-600 text-white",
-  booked: "cursor-not-allowed border-neutral-800 bg-neutral-950 text-neutral-700",
+    "border-neutral-200 bg-white/70 text-neutral-600 backdrop-blur-xl hover:border-brand/50 hover:bg-brand-light/10",
+  selected: "border-brand bg-brand text-white",
+  booked: "cursor-not-allowed border-neutral-100 bg-neutral-100 text-neutral-300",
 };
 
 export default function SeatButton({ seatId, status, onClick }: SeatButtonProps) {

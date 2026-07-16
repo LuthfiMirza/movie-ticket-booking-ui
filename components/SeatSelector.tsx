@@ -67,9 +67,9 @@ export default function SeatSelector({
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col items-center gap-4">
-        <div className="mb-2 h-1.5 w-2/3 max-w-sm rounded-full bg-neutral-800" />
-        <div className="flex w-full flex-col gap-3 rounded-lg border border-neutral-800 bg-neutral-900 p-4 sm:flex-row sm:items-end sm:justify-between">
-          <label className="flex flex-col gap-1 text-sm font-medium text-neutral-300">
+        <div className="mb-2 h-1.5 w-2/3 max-w-sm rounded-full bg-neutral-200" />
+        <div className="flex w-full flex-col gap-3 rounded-2xl border border-white/60 bg-white/50 p-4 shadow-sm backdrop-blur-xl sm:flex-row sm:items-end sm:justify-between">
+          <label className="flex flex-col gap-1 text-sm font-medium text-neutral-600">
             Jumlah kursi otomatis
             <input
               type="number"
@@ -81,13 +81,13 @@ export default function SeatSelector({
                 const value = Math.round(Number(event.target.value));
                 setAutoPickCount(Math.min(Math.max(value, 1), MAX_SEATS));
               }}
-              className="w-24 rounded-md border border-neutral-700 bg-neutral-950 px-3 py-2 text-sm text-neutral-100 outline-none transition-colors focus:border-red-600"
+              className="w-24 rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm text-neutral-800 outline-none transition-colors focus:border-brand"
             />
           </label>
           <button
             type="button"
             onClick={handleAutoPick}
-            className="inline-flex items-center justify-center rounded-md bg-neutral-800 px-4 py-2 text-sm font-medium text-neutral-100 transition-colors hover:bg-neutral-700"
+            className="inline-flex items-center justify-center rounded-full bg-brand-light/25 px-4 py-2 text-sm font-medium text-brand-dark transition-colors hover:bg-brand-light/40"
           >
             Pilih Otomatis
           </button>
@@ -122,17 +122,17 @@ export default function SeatSelector({
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-neutral-400">
+      <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-neutral-500">
         <span className="flex items-center gap-1.5">
-          <span className="h-3 w-3 rounded border border-neutral-700 bg-neutral-900" />
+          <span className="h-3 w-3 rounded border border-neutral-200 bg-white" />
           Available
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="h-3 w-3 rounded border border-red-600 bg-red-600" />
+          <span className="h-3 w-3 rounded border border-brand bg-brand" />
           Selected
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="h-3 w-3 rounded border border-neutral-800 bg-neutral-950" />
+          <span className="h-3 w-3 rounded border border-neutral-100 bg-neutral-100" />
           Booked
         </span>
       </div>
@@ -141,14 +141,14 @@ export default function SeatSelector({
         <p className="text-center text-sm text-red-500">{validationMessage}</p>
       )}
 
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-neutral-800 bg-neutral-950/95 px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] shadow-2xl shadow-black/40 backdrop-blur sm:px-6">
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-white/60 bg-white/70 px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] shadow-[0_-4px_24px_rgba(0,0,0,0.08)] backdrop-blur-xl sm:px-6">
         <div className="mx-auto flex max-w-2xl flex-col items-center gap-3 sm:flex-row sm:justify-between">
           <div>
-            <p aria-live="polite" className="text-sm text-neutral-400">
+            <p aria-live="polite" className="text-sm text-neutral-500">
               {selectedSeatIds.length} seat{selectedSeatIds.length === 1 ? "" : "s"}{" "}
               selected
             </p>
-            <p className="text-lg font-semibold">{formatPrice(total)}</p>
+            <p className="text-lg font-semibold text-neutral-800">{formatPrice(total)}</p>
           </div>
           <Link
             href={
@@ -157,10 +157,10 @@ export default function SeatSelector({
                 : "#"
             }
             aria-disabled={selectedSeatIds.length === 0}
-            className={`inline-flex w-full items-center justify-center rounded-md px-5 py-2.5 text-sm font-medium transition-colors sm:w-fit ${
+            className={`inline-flex w-full items-center justify-center rounded-full px-5 py-2.5 text-sm font-medium transition-colors sm:w-fit ${
               selectedSeatIds.length > 0
-                ? "bg-red-600 text-white hover:bg-red-500"
-                : "pointer-events-none bg-neutral-800 text-neutral-500"
+                ? "bg-brand text-white hover:bg-brand-dark"
+                : "pointer-events-none bg-neutral-200 text-neutral-400"
             }`}
           >
             Continue to Payment

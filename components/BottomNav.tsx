@@ -43,6 +43,12 @@ const TABS = [
 export default function BottomNav() {
   const pathname = usePathname();
 
+  // Hidden during the booking flow — those pages have their own sticky
+  // action bar (Continue to Seats/Payment, Pay Now) occupying the same
+  // fixed-bottom space, mirroring how most booking apps swap the tab bar
+  // for a contextual action bar once you're mid-flow.
+  if (pathname.startsWith("/movie/")) return null;
+
   return (
     <nav className="fixed inset-x-0 bottom-0 z-50 border-t border-white/40 bg-white/70 shadow-[0_-4px_24px_rgba(0,0,0,0.06)] backdrop-blur-xl">
       <div className="mx-auto flex max-w-2xl items-center justify-around px-2 py-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))]">
