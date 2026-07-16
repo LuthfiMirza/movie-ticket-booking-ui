@@ -138,15 +138,6 @@ export function getCinemasByCity(city: string): Cinema[] {
   return cinemas.filter((cinema) => cinema.city === city);
 }
 
-export function getShowtimesByMovieAndCinema(
-  movieId: string,
-  cinemaId: string
-): Showtime[] {
-  return showtimes.filter(
-    (showtime) => showtime.movieId === movieId && showtime.cinemaId === cinemaId
-  );
-}
-
 export function getSeatMapByShowtime(showtimeId: string): SeatMap | undefined {
   return seatMaps.find((seatMap) => seatMap.showtimeId === showtimeId);
 }
