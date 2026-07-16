@@ -5,6 +5,12 @@ interface SeatBlockCandidate {
   score: number;
 }
 
+// Single source of truth for the visual aisle gap rendered in SeatSelector
+// (the gap sits before this column), so the suggestion algorithm never
+// recommends a block that looks adjacent by column number but is split
+// by the aisle on screen.
+export const AISLE_BEFORE_COLUMN = 5;
+
 function getRowDistance(row: string, rows: string[]): number {
   const rowIndex = rows.indexOf(row);
   const rowCenter = (rows.length - 1) / 2;
@@ -16,7 +22,10 @@ function isConsecutiveBlock(seats: Seat[]): boolean {
   return seats.every((seat, index) => {
     if (index === 0) return true;
 
-    return seat.column === seats[index - 1].column + 1;
+    const previousColumn = seats[index - 1].column;
+    if (seat.column !== previousColumn + 1) return false;
+
+    return seat.column !== AISLE_BEFORE_COLUMN;
   });
 }
 
