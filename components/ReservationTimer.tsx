@@ -12,6 +12,7 @@ import {
 interface ReservationTimerProps {
   showtimeId: string;
   durationSeconds?: number;
+  idleMessage?: string;
 }
 
 function formatRemainingTime(seconds: number): string {
@@ -26,6 +27,7 @@ function formatRemainingTime(seconds: number): string {
 export default function ReservationTimer({
   showtimeId,
   durationSeconds = DEFAULT_RESERVATION_SECONDS,
+  idleMessage = "Select a seat to start your reservation",
 }: ReservationTimerProps) {
   const router = useRouter();
   const params = useParams<{ id: string }>();
@@ -73,7 +75,7 @@ export default function ReservationTimer({
           : "border-white/60 bg-white/50 text-neutral-500"
       }`}
     >
-      {isActive ? `Reservation ${formatRemainingTime(remainingSeconds)}` : "Select a seat to start your reservation"}
+      {isActive ? `Reservation ${formatRemainingTime(remainingSeconds)}` : idleMessage}
     </div>
   );
 }
