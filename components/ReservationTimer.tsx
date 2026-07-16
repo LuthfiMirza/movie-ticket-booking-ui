@@ -6,7 +6,7 @@ import {
   DEFAULT_RESERVATION_SECONDS,
   clearReservation,
   getRemainingSeconds,
-  startReservation,
+  hasActiveReservation,
 } from "@/lib/reservation";
 
 interface ReservationTimerProps {
@@ -30,14 +30,23 @@ export default function ReservationTimer({
   const router = useRouter();
   const params = useParams<{ id: string }>();
   const [remainingSeconds, setRemainingSeconds] = useState(durationSeconds);
+  const [isActive, setIsActive] = useState(false);
 
+  // This component only reads/displays the reservation — it does not start
+  // one. The reservation itself is started by SeatSelector on the first seat
+  // pick, so browsing seats without selecting anything doesn't burn the clock.
   // useLayoutEffect (not useEffect) so the sessionStorage-derived remaining
-  // time is applied before the browser paints, avoiding a visible flash of
-  // the full duration when a reservation was already started on a prior page.
+  // time is applied before the browser paints, avoiding a visible flash.
   useLayoutEffect(() => {
-    startReservation(showtimeId);
-
     function updateRemainingTime() {
+      const active = hasActiveReservation(showtimeId);
+      setIsActive(active);
+
+      if (!active) {
+        setRemainingSeconds(durationSeconds);
+        return;
+      }
+
       const nextRemainingSeconds = getRemainingSeconds(showtimeId, durationSeconds);
       setRemainingSeconds(nextRemainingSeconds);
 
@@ -53,7 +62,7 @@ export default function ReservationTimer({
     return () => window.clearInterval(intervalId);
   }, [durationSeconds, params.id, router, showtimeId]);
 
-  const isUrgent = remainingSeconds < 60;
+  const isUrgent = isActive && remainingSeconds < 60;
 
   return (
     <div
@@ -64,7 +73,7 @@ export default function ReservationTimer({
           : "border-neutral-700 bg-neutral-900 text-neutral-400"
       }`}
     >
-      Reservation {formatRemainingTime(remainingSeconds)}
+      {isActive ? `Reservation ${formatRemainingTime(remainingSeconds)}` : "Select a seat to start your reservation"}
     </div>
   );
 }

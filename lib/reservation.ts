@@ -39,3 +39,9 @@ export function clearReservation(showtimeId: string): void {
 
   window.sessionStorage.removeItem(getReservationKey(showtimeId));
 }
+
+export function hasActiveReservation(showtimeId: string): boolean {
+  if (!canUseSessionStorage()) return false;
+
+  return window.sessionStorage.getItem(getReservationKey(showtimeId)) !== null;
+}

@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import type { Seat } from "@/types";
 import { formatPrice } from "@/lib/format";
+import { startReservation } from "@/lib/reservation";
 import { AISLE_BEFORE_COLUMN, suggestBestSeats } from "@/lib/seat-suggestion";
 import SeatButton from "@/components/SeatButton";
 
@@ -40,6 +41,7 @@ export default function SeatSelector({
         setValidationMessage(`You can select up to ${MAX_SEATS} seats.`);
         return current;
       }
+      startReservation(showtimeId);
       return [...current, seat.id];
     });
   }
@@ -53,6 +55,7 @@ export default function SeatSelector({
     }
 
     setValidationMessage(null);
+    startReservation(showtimeId);
     setSelectedSeatIds(nextSeatIds);
   }
 
