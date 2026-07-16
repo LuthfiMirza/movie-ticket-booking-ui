@@ -34,7 +34,7 @@ export default function PaymentPage({ params, searchParams }: PaymentPageProps) 
       />
 
       <header className="mb-6 text-center">
-        <h1 className="font-serif text-2xl font-semibold tracking-tight text-neutral-800">Payment</h1>
+        <h1 className="font-serif text-2xl font-semibold tracking-tight text-neutral-50">Payment</h1>
         <ReservationTimer
           showtimeId={showtime.id}
           idleMessage="Reservation not active — go back to Seats to reselect"

@@ -39,9 +39,9 @@ export default function PaymentMethodSelector({
 
   return (
     <>
-      <section className="rounded-2xl border border-white/60 bg-white/50 p-6 shadow-sm backdrop-blur-xl">
-        <h2 className="font-serif text-lg font-semibold text-neutral-800">Payment Method</h2>
-        <p className="mt-1 text-sm text-neutral-500">
+      <section className="rounded-2xl border border-brand/15 bg-white/[0.04] p-6 backdrop-blur-xl">
+        <h2 className="font-serif text-lg font-semibold text-neutral-50">Payment Method</h2>
+        <p className="mt-1 text-sm text-neutral-400">
           Choose a dummy payment method to continue this demo flow.
         </p>
 
@@ -55,7 +55,7 @@ export default function PaymentMethodSelector({
                 className={`flex cursor-pointer items-start gap-3 rounded-xl border p-4 transition-colors ${
                   isSelected
                     ? "border-brand bg-brand-light/10"
-                    : "border-neutral-200 bg-white/60 hover:border-brand/40"
+                    : "border-white/10 bg-white/[0.03] hover:border-brand/40"
                 }`}
               >
                 <input
@@ -67,10 +67,10 @@ export default function PaymentMethodSelector({
                   className="mt-1 h-4 w-4 accent-brand"
                 />
                 <span className="flex flex-col">
-                  <span className="text-sm font-medium text-neutral-800">
+                  <span className="text-sm font-medium text-neutral-100">
                     {method.label}
                   </span>
-                  <span className="mt-1 text-xs text-neutral-500">
+                  <span className="mt-1 text-xs text-neutral-400">
                     {method.description}
                   </span>
                 </span>
@@ -80,16 +80,16 @@ export default function PaymentMethodSelector({
         </div>
       </section>
 
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-white/60 bg-white/70 px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] shadow-[0_-4px_24px_rgba(0,0,0,0.08)] backdrop-blur-xl sm:px-6">
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-brand/15 bg-white/[0.04] px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] shadow-[0_-4px_24px_rgba(0,0,0,0.4)] backdrop-blur-xl sm:px-6">
         <div className="mx-auto max-w-lg">
           <button
             type="button"
             onClick={handlePayNow}
             disabled={!selectedMethod}
-            className={`inline-flex w-full items-center justify-center rounded-full px-5 py-2.5 text-sm font-medium transition-colors ${
+            className={`inline-flex w-full items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold transition-opacity ${
               selectedMethod
-                ? "bg-brand text-white hover:bg-brand-dark"
-                : "cursor-not-allowed bg-neutral-200 text-neutral-400"
+                ? "bg-gradient-to-br from-brand-light to-brand text-brand-ink hover:opacity-90"
+                : "cursor-not-allowed bg-white/[0.05] text-neutral-600"
             }`}
           >
             Pay Now

@@ -51,21 +51,21 @@ export default function OrderSummary({
   }
 
   return (
-    <div className="flex flex-col gap-4 rounded-2xl border border-white/60 bg-white/50 p-6 shadow-sm backdrop-blur-xl">
+    <div className="flex flex-col gap-4 rounded-2xl border border-brand/15 bg-white/[0.04] p-6 backdrop-blur-xl">
       <div>
-        <h2 className="font-serif text-lg font-semibold text-neutral-800">{movie.title}</h2>
-        <p className="mt-1 text-sm text-neutral-500">
+        <h2 className="font-serif text-lg font-semibold text-neutral-50">{movie.title}</h2>
+        <p className="mt-1 text-sm text-neutral-400">
           {formatDateLabel(showtime.date)} · {showtime.time} · {showtime.studio}
         </p>
       </div>
 
-      <div className="flex items-center justify-between border-t border-neutral-200 pt-4 text-sm">
-        <span className="text-neutral-500">Seats</span>
-        <span className="font-medium text-neutral-800">{seatIds.join(", ")}</span>
+      <div className="flex items-center justify-between border-t border-white/10 pt-4 text-sm">
+        <span className="text-neutral-400">Seats</span>
+        <span className="font-medium text-neutral-100">{seatIds.join(", ")}</span>
       </div>
 
-      <div className="border-t border-neutral-200 pt-4">
-        <label className="text-sm font-medium text-neutral-600" htmlFor="voucher-code">
+      <div className="border-t border-white/10 pt-4">
+        <label className="text-sm font-medium text-neutral-300" htmlFor="voucher-code">
           Voucher Code
         </label>
         <div className="mt-2 flex flex-col gap-2 sm:flex-row">
@@ -74,12 +74,12 @@ export default function OrderSummary({
             value={voucherInput}
             onChange={(event) => setVoucherInput(event.target.value)}
             placeholder="CINEBOOK10"
-            className="min-w-0 flex-1 rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm text-neutral-800 outline-none transition-colors placeholder:text-neutral-400 focus:border-brand"
+            className="min-w-0 flex-1 rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-neutral-100 outline-none transition-colors placeholder:text-neutral-500 focus:border-brand"
           />
           <button
             type="button"
             onClick={handleApplyVoucher}
-            className="rounded-full bg-brand-light/25 px-4 py-2 text-sm font-medium text-brand-dark transition-colors hover:bg-brand-light/40"
+            className="rounded-full bg-gradient-to-br from-brand-light to-brand px-4 py-2 text-sm font-semibold text-brand-ink transition-opacity hover:opacity-90"
           >
             Apply
           </button>
@@ -87,7 +87,7 @@ export default function OrderSummary({
         {voucherMessage && (
           <p
             className={`mt-2 text-sm ${
-              appliedVoucher ? "text-green-600" : "text-red-500"
+              appliedVoucher ? "text-green-500" : "text-red-400"
             }`}
           >
             {voucherMessage}
@@ -95,26 +95,26 @@ export default function OrderSummary({
         )}
       </div>
 
-      <div className="flex flex-col gap-3 border-t border-neutral-200 pt-4 text-sm">
+      <div className="flex flex-col gap-3 border-t border-white/10 pt-4 text-sm">
         <div className="flex items-center justify-between">
-          <span className="text-neutral-500">Subtotal</span>
-          <span className="font-medium text-neutral-800">{formatPrice(pricing.subtotal)}</span>
+          <span className="text-neutral-400">Subtotal</span>
+          <span className="font-medium text-neutral-100">{formatPrice(pricing.subtotal)}</span>
         </div>
         <div className="flex items-center justify-between">
-          <span className="text-neutral-500">Admin Fee</span>
-          <span className="font-medium text-neutral-800">{formatPrice(pricing.adminFee)}</span>
+          <span className="text-neutral-400">Admin Fee</span>
+          <span className="font-medium text-neutral-100">{formatPrice(pricing.adminFee)}</span>
         </div>
         {pricing.discount > 0 && (
-          <div className="flex items-center justify-between text-green-600">
+          <div className="flex items-center justify-between text-green-500">
             <span>Discount</span>
             <span className="font-medium">-{formatPrice(pricing.discount)}</span>
           </div>
         )}
       </div>
 
-      <div className="flex items-center justify-between border-t border-neutral-200 pt-4">
-        <span className="text-neutral-500">Total</span>
-        <span className="text-lg font-semibold text-neutral-800">{formatPrice(pricing.total)}</span>
+      <div className="flex items-center justify-between border-t border-white/10 pt-4">
+        <span className="text-neutral-400">Total</span>
+        <span className="text-lg font-semibold text-brand-light">{formatPrice(pricing.total)}</span>
       </div>
     </div>
   );
