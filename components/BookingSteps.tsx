@@ -34,8 +34,8 @@ export default function BookingSteps({ currentStep, stepHrefs }: BookingStepsPro
                   : isCompleted
                     ? "border-green-600 bg-green-600 text-white"
                     : isCurrent
-                      ? "border-red-600 bg-red-600 text-white"
-                      : "border-neutral-800 bg-neutral-900 text-neutral-600"
+                      ? "border-brand bg-brand text-white"
+                      : "border-neutral-200 bg-white text-neutral-400"
               }`}
             >
               {isCompleted || isSuccess ? "✓" : index + 1}
@@ -46,12 +46,12 @@ export default function BookingSteps({ currentStep, stepHrefs }: BookingStepsPro
             <span
               className={`max-w-16 truncate text-center text-[11px] font-medium sm:max-w-none sm:text-xs ${
                 isSuccess
-                  ? "text-green-500"
+                  ? "text-green-600"
                   : isCurrent
-                    ? "text-red-500"
+                    ? "text-brand-dark"
                     : isCompleted
-                      ? "text-green-500"
-                      : "text-neutral-600"
+                      ? "text-green-600"
+                      : "text-neutral-400"
               }`}
             >
               {step.label}
@@ -79,7 +79,7 @@ export default function BookingSteps({ currentStep, stepHrefs }: BookingStepsPro
                 <span
                   aria-hidden="true"
                   className={`h-px flex-1 ${
-                    index < currentStepIndex ? "bg-green-600" : "bg-neutral-800"
+                    index < currentStepIndex ? "bg-green-600" : "bg-neutral-200"
                   }`}
                 />
               )}

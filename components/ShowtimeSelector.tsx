@@ -54,7 +54,7 @@ export default function ShowtimeSelector({ showtimes }: ShowtimeSelectorProps) {
   return (
     <div className="flex flex-col gap-6">
       {filteredShowtimes.length === 0 && (
-        <div className="rounded-md border border-neutral-800 bg-neutral-900 px-4 py-3 text-sm text-neutral-400">
+        <div className="rounded-2xl border border-white/60 bg-white/50 px-4 py-3 text-sm text-neutral-500 backdrop-blur-xl">
           Tidak ada jadwal di bioskop ini
           {selectedCinema ? ` (${selectedCinema.name})` : ""}. Silakan ganti bioskop
           dari halaman utama.
@@ -64,7 +64,7 @@ export default function ShowtimeSelector({ showtimes }: ShowtimeSelectorProps) {
       {filteredShowtimes.length > 0 && (
         <>
           <div>
-            <h2 className="mb-3 text-sm font-medium uppercase tracking-widest text-neutral-400">
+            <h2 className="mb-3 text-sm font-medium uppercase tracking-widest text-neutral-500">
               Select Date
             </h2>
             <div className="flex flex-wrap gap-2">
@@ -75,10 +75,10 @@ export default function ShowtimeSelector({ showtimes }: ShowtimeSelectorProps) {
                     key={date}
                     type="button"
                     onClick={() => handleSelectDate(date)}
-                    className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
+                    className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                       isSelected
-                        ? "bg-red-600 text-white"
-                        : "bg-neutral-800 text-neutral-300 hover:bg-neutral-700"
+                        ? "bg-brand text-white"
+                        : "border border-neutral-200 bg-white/60 text-neutral-600 hover:border-brand/40"
                     }`}
                   >
                     {formatDateLabel(date)}
@@ -89,7 +89,7 @@ export default function ShowtimeSelector({ showtimes }: ShowtimeSelectorProps) {
           </div>
 
           <div>
-            <h2 className="mb-3 text-sm font-medium uppercase tracking-widest text-neutral-400">
+            <h2 className="mb-3 text-sm font-medium uppercase tracking-widest text-neutral-500">
               Select Time
             </h2>
             <div className="flex flex-wrap gap-2">
@@ -102,21 +102,21 @@ export default function ShowtimeSelector({ showtimes }: ShowtimeSelectorProps) {
                     type="button"
                     onClick={() => setSelectedShowtimeId(showtime.id)}
                     disabled={isSoldOut}
-                    className={`flex flex-col items-start rounded-md border px-4 py-2 text-left transition-colors ${
+                    className={`flex flex-col items-start rounded-xl border px-4 py-2 text-left backdrop-blur-xl transition-colors ${
                       isSoldOut
-                        ? "cursor-not-allowed border-neutral-800 bg-neutral-950 opacity-60"
+                        ? "cursor-not-allowed border-neutral-200 bg-white/30 opacity-60"
                         : isSelected
-                        ? "border-red-600 bg-red-600/10"
-                        : "border-neutral-800 bg-neutral-900 hover:border-neutral-700"
+                        ? "border-brand bg-brand-light/20"
+                        : "border-white/60 bg-white/50 hover:border-brand/40"
                     }`}
                   >
                     <span
                       className={`text-sm font-semibold ${
                         isSoldOut
-                          ? "text-neutral-600"
+                          ? "text-neutral-400"
                           : isSelected
-                            ? "text-red-500"
-                            : "text-neutral-100"
+                            ? "text-brand-dark"
+                            : "text-neutral-800"
                       }`}
                     >
                       {showtime.time}
@@ -133,10 +133,10 @@ export default function ShowtimeSelector({ showtimes }: ShowtimeSelectorProps) {
           <Link
             href={selectedShowtime ? `/movie/${selectedShowtime.movieId}/seats?showtime=${selectedShowtime.id}` : "#"}
             aria-disabled={!selectedShowtime}
-            className={`mt-2 inline-flex w-fit items-center justify-center rounded-md px-5 py-2.5 text-sm font-medium transition-colors ${
+            className={`mt-2 inline-flex w-fit items-center justify-center rounded-full px-5 py-2.5 text-sm font-medium transition-colors ${
               selectedShowtime
-                ? "bg-red-600 text-white hover:bg-red-500"
-                : "pointer-events-none bg-neutral-800 text-neutral-500"
+                ? "bg-brand text-white hover:bg-brand-dark"
+                : "pointer-events-none bg-neutral-200 text-neutral-400"
             }`}
           >
             Continue to Seats

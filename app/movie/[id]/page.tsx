@@ -34,7 +34,7 @@ export default function MoviePage({ params, searchParams }: MoviePageProps) {
           />
         </div>
         <div className="flex flex-col gap-3">
-          <h1 className="text-3xl font-bold tracking-tight">{movie.title}</h1>
+          <h1 className="font-serif text-3xl font-semibold tracking-tight text-neutral-800">{movie.title}</h1>
           <p className="text-sm text-neutral-500">
             {movie.rating} · {movie.durationMinutes} min
           </p>
@@ -42,19 +42,19 @@ export default function MoviePage({ params, searchParams }: MoviePageProps) {
             {movie.genres.map((genre) => (
               <span
                 key={genre}
-                className="rounded bg-neutral-800 px-2 py-0.5 text-xs text-neutral-300"
+                className="rounded-full bg-neutral-100 px-2 py-0.5 text-xs text-neutral-600"
               >
                 {genre}
               </span>
             ))}
           </div>
-          <p className="max-w-xl text-neutral-400">{movie.synopsis}</p>
+          <p className="max-w-xl text-neutral-500">{movie.synopsis}</p>
         </div>
       </div>
 
-      <div className="mt-10 border-t border-neutral-800 pt-8">
+      <div className="mt-10 border-t border-neutral-200 pt-8">
         {searchParams.expired === "1" && (
-          <div className="mb-6 rounded-md border border-red-600/40 bg-red-600/10 px-4 py-3 text-sm text-red-300">
+          <div className="mb-6 rounded-2xl border border-amber-300/60 bg-amber-50/80 px-4 py-3 text-sm text-amber-700 backdrop-blur-xl">
             Sesi reservasi sebelumnya sudah habis, silakan pilih ulang.
           </div>
         )}
