@@ -35,7 +35,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${playfairDisplay.variable} antialiased`}
       >
         <div className="fixed inset-0 -z-10 bg-[linear-gradient(320deg,#a0e8f2_-40%,#ffffff_70%)]" />
-        <div className="pb-20">{children}</div>
+        <div className="pb-20 md:pb-0">{children}</div>
         <BottomNav />
       </body>
     </html>
