@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import type { Seat } from "@/types";
 import { formatPrice } from "@/lib/format";
-import { suggestBestSeats } from "@/lib/seat-suggestion";
+import { AISLE_BEFORE_COLUMN, suggestBestSeats } from "@/lib/seat-suggestion";
 import SeatButton from "@/components/SeatButton";
 
 interface SeatSelectorProps {
@@ -49,7 +49,6 @@ export default function SeatSelector({
 
     if (nextSeatIds.length === 0) {
       setValidationMessage("No adjacent seats available for that amount.");
-      setSelectedSeatIds([]);
       return;
     }
 
@@ -73,9 +72,10 @@ export default function SeatSelector({
               type="number"
               min={1}
               max={MAX_SEATS}
+              step={1}
               value={autoPickCount}
               onChange={(event) => {
-                const value = Number(event.target.value);
+                const value = Math.round(Number(event.target.value));
                 setAutoPickCount(Math.min(Math.max(value, 1), MAX_SEATS));
               }}
               className="w-24 rounded-md border border-neutral-700 bg-neutral-950 px-3 py-2 text-sm text-neutral-100 outline-none transition-colors focus:border-red-600"
@@ -100,7 +100,7 @@ export default function SeatSelector({
                     ? "selected"
                     : seat.status;
                   return (
-                    <div key={seat.id} className={seat.column === 5 ? "ml-3" : ""}>
+                    <div key={seat.id} className={seat.column === AISLE_BEFORE_COLUMN ? "ml-3" : ""}>
                       <SeatButton
                         seatId={seat.id}
                         status={status}
