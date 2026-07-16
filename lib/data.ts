@@ -1,4 +1,5 @@
 import type { Cinema, Movie, Showtime, Seat, SeatMap } from "@/types";
+import { createPosterDataUri } from "@/lib/poster";
 
 export const cinemas: Cinema[] = [
   { id: "c1", city: "Jakarta", name: "CineBook Grand Indonesia" },
@@ -11,7 +12,7 @@ export const movies: Movie[] = [
   {
     id: "m1",
     title: "Nebula Drift",
-    posterUrl: "https://placehold.co/300x450/1a1a2e/fff.png?text=Nebula+Drift",
+    posterUrl: createPosterDataUri("Nebula Drift", "#1a1a2e"),
     genres: ["Sci-Fi", "Adventure"],
     durationMinutes: 128,
     synopsis:
@@ -21,7 +22,7 @@ export const movies: Movie[] = [
   {
     id: "m2",
     title: "The Last Ember",
-    posterUrl: "https://placehold.co/300x450/2e1a1a/fff.png?text=The+Last+Ember",
+    posterUrl: createPosterDataUri("The Last Ember", "#2e1a1a"),
     genres: ["Drama", "War"],
     durationMinutes: 141,
     synopsis:
@@ -31,7 +32,7 @@ export const movies: Movie[] = [
   {
     id: "m3",
     title: "Paper Tigers",
-    posterUrl: "https://placehold.co/300x450/1a2e1a/fff.png?text=Paper+Tigers",
+    posterUrl: createPosterDataUri("Paper Tigers", "#1a2e1a"),
     genres: ["Comedy"],
     durationMinutes: 102,
     synopsis:
@@ -41,7 +42,7 @@ export const movies: Movie[] = [
   {
     id: "m4",
     title: "Glass Horizon",
-    posterUrl: "https://placehold.co/300x450/2e2a1a/fff.png?text=Glass+Horizon",
+    posterUrl: createPosterDataUri("Glass Horizon", "#2e2a1a"),
     genres: ["Thriller", "Mystery"],
     durationMinutes: 115,
     synopsis:
@@ -51,7 +52,7 @@ export const movies: Movie[] = [
   {
     id: "m5",
     title: "Midnight Orchard",
-    posterUrl: "https://placehold.co/300x450/241a2e/fff.png?text=Midnight+Orchard",
+    posterUrl: createPosterDataUri("Midnight Orchard", "#241a2e"),
     genres: ["Horror"],
     durationMinutes: 97,
     synopsis:
@@ -61,7 +62,7 @@ export const movies: Movie[] = [
   {
     id: "m6",
     title: "Coral & Compass",
-    posterUrl: "https://placehold.co/300x450/1a2e2a/fff.png?text=Coral+%26+Compass",
+    posterUrl: createPosterDataUri("Coral & Compass", "#1a2e2a"),
     genres: ["Animation", "Family"],
     durationMinutes: 94,
     synopsis:
