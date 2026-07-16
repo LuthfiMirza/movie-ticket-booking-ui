@@ -1,8 +1,7 @@
 import { notFound } from "next/navigation";
 import BookingSteps from "@/components/BookingSteps";
 import { getMovieById, getShowtimesByMovie } from "@/lib/data";
-import OrderSummary from "@/components/OrderSummary";
-import PaymentMethodSelector from "@/components/PaymentMethodSelector";
+import PaymentPanel from "@/components/PaymentPanel";
 import ReservationTimer from "@/components/ReservationTimer";
 
 interface PaymentPageProps {
@@ -22,7 +21,7 @@ export default function PaymentPage({ params, searchParams }: PaymentPageProps) 
   const seatIds = searchParams.seats?.split(",").filter(Boolean) ?? [];
   if (seatIds.length === 0) notFound();
 
-  const ticketHref = `/movie/${movie.id}/e-ticket?showtime=${showtime.id}&seats=${seatIds.join(",")}`;
+  const baseTicketHref = `/movie/${movie.id}/e-ticket?showtime=${showtime.id}&seats=${seatIds.join(",")}`;
 
   return (
     <main className="mx-auto max-w-lg px-4 py-10 sm:px-6 sm:py-14">
@@ -33,15 +32,12 @@ export default function PaymentPage({ params, searchParams }: PaymentPageProps) 
         <ReservationTimer showtimeId={showtime.id} />
       </header>
 
-      <div className="flex flex-col gap-6">
-        <OrderSummary
-          movie={movie}
-          showtime={showtime}
-          seatIds={seatIds}
-          pricePerSeat={showtime.price}
-        />
-        <PaymentMethodSelector ticketHref={ticketHref} />
-      </div>
+      <PaymentPanel
+        movie={movie}
+        showtime={showtime}
+        seatIds={seatIds}
+        baseTicketHref={baseTicketHref}
+      />
     </main>
   );
 }
