@@ -28,6 +28,7 @@ export default function MoviePage({ params, searchParams }: MoviePageProps) {
             src={movie.posterUrl}
             alt={movie.title}
             fill
+            unoptimized
             sizes="(max-width: 640px) 160px, 208px"
             className="object-cover"
           />

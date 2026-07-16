@@ -63,6 +63,7 @@ export default function ETicket({
               src={movie.posterUrl}
               alt={movie.title}
               fill
+              unoptimized
               sizes="96px"
               className="object-cover"
             />

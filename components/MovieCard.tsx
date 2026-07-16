@@ -14,6 +14,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
           src={movie.posterUrl}
           alt={movie.title}
           fill
+          unoptimized
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
           className="object-cover"
         />
