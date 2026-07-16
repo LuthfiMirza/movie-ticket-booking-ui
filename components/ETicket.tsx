@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { formatDateLabel, formatPrice } from "@/lib/format";
-import { calculateTotal, getPricingSessionKey } from "@/lib/pricing";
+import { calculateTotal } from "@/lib/pricing";
 import { clearReservation } from "@/lib/reservation";
 import type { Movie, Showtime } from "@/types";
 
@@ -13,12 +13,18 @@ interface ETicketProps {
   showtime: Showtime;
   seatIds: string[];
   pricePerSeat: number;
+  voucherCode?: string;
 }
 
-function generateBookingReference(): string {
-  const stamp = Date.now().toString(36).toUpperCase();
-  const random = Math.random().toString(36).slice(2, 6).toUpperCase();
-  return `CB-${stamp}-${random}`;
+// Deterministic (not random) so the same booking always displays the same
+// reference across refreshes/revisits — no storage needed as a source of truth.
+function generateBookingReference(showtimeId: string, seatIds: string[]): string {
+  const seed = `${showtimeId}:${seatIds.slice().sort().join(",")}`;
+  let hash = 0;
+  for (let index = 0; index < seed.length; index++) {
+    hash = (hash * 31 + seed.charCodeAt(index)) >>> 0;
+  }
+  return `CB-${hash.toString(36).toUpperCase()}`;
 }
 
 export default function ETicket({
@@ -26,25 +32,20 @@ export default function ETicket({
   showtime,
   seatIds,
   pricePerSeat,
+  voucherCode = "",
 }: ETicketProps) {
-  const [bookingReference] = useState(() => generateBookingReference());
-  const [voucherCode, setVoucherCode] = useState("");
+  const bookingReference = useMemo(
+    () => generateBookingReference(showtime.id, seatIds),
+    [showtime.id, seatIds]
+  );
   const pricing = useMemo(
     () => calculateTotal(seatIds.length, pricePerSeat, voucherCode),
     [pricePerSeat, seatIds.length, voucherCode]
   );
 
   useEffect(() => {
-    const storedVoucher = window.sessionStorage.getItem(
-      getPricingSessionKey(showtime.id, seatIds)
-    );
-
-    if (storedVoucher) {
-      setVoucherCode(storedVoucher);
-    }
-
     clearReservation(showtime.id);
-  }, [seatIds, showtime.id]);
+  }, [showtime.id]);
 
   return (
     <div className="overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900 shadow-2xl shadow-black/20">

@@ -5,7 +5,7 @@ import { getMovieById, getShowtimesByMovie } from "@/lib/data";
 
 interface ETicketPageProps {
   params: { id: string };
-  searchParams: { showtime?: string; seats?: string };
+  searchParams: { showtime?: string; seats?: string; voucher?: string };
 }
 
 export default function ETicketPage({ params, searchParams }: ETicketPageProps) {
@@ -29,6 +29,7 @@ export default function ETicketPage({ params, searchParams }: ETicketPageProps) 
         showtime={showtime}
         seatIds={seatIds}
         pricePerSeat={showtime.price}
+        voucherCode={searchParams.voucher}
       />
     </main>
   );
