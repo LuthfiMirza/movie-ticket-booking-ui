@@ -107,4 +107,5 @@ export default function LocationPicker() {
   );
 }
 
-export { LOCATION_STORAGE_KEY };
+export { LOCATION_STORAGE_KEY, getStoredLocation };
+export type { StoredLocation };

@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import type { Showtime } from "@/types";
-import { LOCATION_STORAGE_KEY } from "@/components/LocationPicker";
+import { getStoredLocation } from "@/components/LocationPicker";
 import { cinemas, isShowtimeSoldOut } from "@/lib/data";
 import { formatDateLabel, formatPrice } from "@/lib/format";
 
@@ -15,17 +15,7 @@ export default function ShowtimeSelector({ showtimes }: ShowtimeSelectorProps) {
   const [selectedCinemaId, setSelectedCinemaId] = useState(cinemas[0]?.id ?? "");
 
   useEffect(() => {
-    const storedLocation = window.localStorage.getItem(LOCATION_STORAGE_KEY);
-    if (!storedLocation) return;
-
-    try {
-      const parsedLocation = JSON.parse(storedLocation) as { cinemaId?: string };
-      if (parsedLocation.cinemaId) {
-        setSelectedCinemaId(parsedLocation.cinemaId);
-      }
-    } catch {
-      setSelectedCinemaId(cinemas[0]?.id ?? "");
-    }
+    setSelectedCinemaId(getStoredLocation().cinemaId);
   }, []);
 
   const filteredShowtimes = useMemo(
