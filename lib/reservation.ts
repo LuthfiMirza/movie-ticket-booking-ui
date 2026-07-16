@@ -1,3 +1,5 @@
+export const DEFAULT_RESERVATION_SECONDS = 600;
+
 const RESERVATION_PREFIX = "reservation:";
 
 function getReservationKey(showtimeId: string): string {
@@ -20,7 +22,7 @@ export function startReservation(showtimeId: string): void {
 
 export function getRemainingSeconds(
   showtimeId: string,
-  durationSeconds = 600
+  durationSeconds = DEFAULT_RESERVATION_SECONDS
 ): number {
   if (!canUseSessionStorage()) return durationSeconds;
 

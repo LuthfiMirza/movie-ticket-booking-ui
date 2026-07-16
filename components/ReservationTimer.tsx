@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import {
+  DEFAULT_RESERVATION_SECONDS,
   clearReservation,
   getRemainingSeconds,
   startReservation,
@@ -24,13 +25,16 @@ function formatRemainingTime(seconds: number): string {
 
 export default function ReservationTimer({
   showtimeId,
-  durationSeconds = 600,
+  durationSeconds = DEFAULT_RESERVATION_SECONDS,
 }: ReservationTimerProps) {
   const router = useRouter();
   const params = useParams<{ id: string }>();
   const [remainingSeconds, setRemainingSeconds] = useState(durationSeconds);
 
-  useEffect(() => {
+  // useLayoutEffect (not useEffect) so the sessionStorage-derived remaining
+  // time is applied before the browser paints, avoiding a visible flash of
+  // the full duration when a reservation was already started on a prior page.
+  useLayoutEffect(() => {
     startReservation(showtimeId);
 
     function updateRemainingTime() {
