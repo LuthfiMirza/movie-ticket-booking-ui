@@ -8,7 +8,7 @@ interface MovieCardProps {
 
 export default function MovieCard({ movie }: MovieCardProps) {
   return (
-    <div className="flex flex-col overflow-hidden rounded-lg border border-neutral-800 bg-neutral-900">
+    <div className="flex flex-col overflow-hidden rounded-2xl border border-white/60 bg-white/50 shadow-sm backdrop-blur-xl transition-shadow hover:shadow-md">
       <div className="relative aspect-[2/3] w-full">
         <Image
           src={movie.posterUrl}
@@ -21,7 +21,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
       </div>
       <div className="flex flex-1 flex-col gap-3 p-4">
         <div>
-          <h3 className="font-semibold leading-tight">{movie.title}</h3>
+          <h3 className="font-semibold leading-tight text-neutral-800">{movie.title}</h3>
           <p className="mt-1 text-xs text-neutral-500">
             {movie.rating} · {movie.durationMinutes} min
           </p>
@@ -30,7 +30,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
           {movie.genres.map((genre) => (
             <span
               key={genre}
-              className="rounded bg-neutral-800 px-2 py-0.5 text-xs text-neutral-300"
+              className="rounded-full bg-neutral-100 px-2 py-0.5 text-xs text-neutral-600"
             >
               {genre}
             </span>
@@ -38,7 +38,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
         </div>
         <Link
           href={`/movie/${movie.id}`}
-          className="mt-auto inline-flex items-center justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-red-500"
+          className="mt-auto inline-flex items-center justify-center rounded-full bg-brand px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-brand-dark"
         >
           Book Now
         </Link>

@@ -73,13 +73,13 @@ export default function LocationPicker() {
   }
 
   return (
-    <div className="flex flex-col gap-2 rounded-lg border border-neutral-800 bg-neutral-900 p-3 sm:flex-row sm:items-center">
+    <div className="flex flex-col gap-2 rounded-2xl border border-white/60 bg-white/50 p-3 shadow-sm backdrop-blur-xl sm:flex-row sm:items-center">
       <label className="flex flex-col gap-1 text-xs font-medium uppercase tracking-widest text-neutral-500">
         City
         <select
           value={selectedLocation.city}
           onChange={(event) => handleCityChange(event.target.value)}
-          className="rounded-md border border-neutral-700 bg-neutral-950 px-3 py-2 text-sm font-medium normal-case tracking-normal text-neutral-100 outline-none transition-colors focus:border-red-600"
+          className="rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm font-medium normal-case tracking-normal text-neutral-800 outline-none transition-colors focus:border-brand"
         >
           {cities.map((city) => (
             <option key={city} value={city}>
@@ -94,7 +94,7 @@ export default function LocationPicker() {
         <select
           value={selectedLocation.cinemaId}
           onChange={(event) => handleCinemaChange(event.target.value)}
-          className="rounded-md border border-neutral-700 bg-neutral-950 px-3 py-2 text-sm font-medium normal-case tracking-normal text-neutral-100 outline-none transition-colors focus:border-red-600"
+          className="rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm font-medium normal-case tracking-normal text-neutral-800 outline-none transition-colors focus:border-brand"
         >
           {cityCinemas.map((cinema) => (
             <option key={cinema.id} value={cinema.id}>
