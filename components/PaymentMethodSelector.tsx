@@ -78,18 +78,22 @@ export default function PaymentMethodSelector({
         })}
       </div>
 
-      <button
-        type="button"
-        onClick={handlePayNow}
-        disabled={!selectedMethod}
-        className={`mt-6 inline-flex w-full items-center justify-center rounded-md px-5 py-2.5 text-sm font-medium transition-colors ${
-          selectedMethod
-            ? "bg-red-600 text-white hover:bg-red-500"
-            : "cursor-not-allowed bg-neutral-800 text-neutral-500"
-        }`}
-      >
-        Pay Now
-      </button>
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-neutral-800 bg-neutral-950/95 px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] shadow-2xl shadow-black/40 backdrop-blur sm:px-6">
+        <div className="mx-auto max-w-lg">
+          <button
+            type="button"
+            onClick={handlePayNow}
+            disabled={!selectedMethod}
+            className={`inline-flex w-full items-center justify-center rounded-md px-5 py-2.5 text-sm font-medium transition-colors ${
+              selectedMethod
+                ? "bg-red-600 text-white hover:bg-red-500"
+                : "cursor-not-allowed bg-neutral-800 text-neutral-500"
+            }`}
+          >
+            Pay Now
+          </button>
+        </div>
+      </div>
     </section>
   );
 }
