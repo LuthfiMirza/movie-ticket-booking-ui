@@ -71,8 +71,8 @@ export default function ReservationTimer({
       aria-live="polite"
       className={`mx-auto mt-4 w-fit rounded-full border px-3 py-1 text-xs font-medium uppercase tracking-widest backdrop-blur-xl ${
         isUrgent
-          ? "border-red-300 bg-red-50/80 text-red-600"
-          : "border-white/60 bg-white/50 text-neutral-500"
+          ? "border-red-500/30 bg-red-500/10 text-red-400"
+          : "border-brand/20 bg-white/[0.04] text-neutral-400"
       }`}
     >
       {isActive ? `Reservation ${formatRemainingTime(remainingSeconds)}` : idleMessage}
