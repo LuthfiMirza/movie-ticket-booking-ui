@@ -33,6 +33,9 @@ Before implementation, low-fidelity wireframes were sketched for the two highest
 | `OrderSummary` | `movie: Movie`, `showtime: Showtime`, `seatIds: string[]`, `pricePerSeat: number`, `onVoucherApplied?: (code: string) => void` | `PaymentPanel` |
 | `PaymentMethodSelector` | `ticketHref: string` | `PaymentPanel` — dummy method selection |
 | `ETicket` | `movie: Movie`, `showtime: Showtime`, `seatIds: string[]`, `pricePerSeat: number`, `voucherCode?: string` | E-ticket page (`app/movie/[id]/e-ticket/page.tsx`) |
+| `TrailerButton` | `movieTitle: string` | Movie detail page — opens a dummy trailer overlay (no real video backend) |
+| `BottomNav` | *(none)* | Root layout — mobile/tablet tab bar, hidden on desktop and during the booking flow |
+| `EmptyState` | `title: string`, `description: string` | Tickets/Promo/Account placeholder pages |
 
 Shared, non-visual modules:
 
@@ -41,7 +44,7 @@ Shared, non-visual modules:
 - `lib/pricing.ts` — `calculateTotal` (subtotal/admin fee/discount/total breakdown) and `isValidVoucher`.
 - `lib/reservation.ts` — `sessionStorage`-backed reservation countdown helpers used by `ReservationTimer`.
 - `lib/seat-suggestion.ts` — `suggestBestSeats`, aisle-aware best-seat auto-pick used by `SeatSelector`.
-- `types/` — `Movie`, `Showtime`, `Studio`, `Cinema`, `Seat`, `SeatStatus`, `SeatMap`.
+- `types/` — `Movie`, `CastMember`, `Showtime`, `Studio`, `Cinema`, `Seat`, `SeatStatus`, `SeatMap`.
 
 ## Design decisions
 
@@ -50,6 +53,8 @@ Shared, non-visual modules:
 **Seat status derived at render time, not stored as selected.** The mock seat map only encodes ground truth: `available` or `booked`. `SeatSelector` holds the set of selected seat IDs in `useState` and computes the seat's *displayed* status (`selected` vs the mock data's status) on each render. This keeps the mock data a pure fixture and avoids two sources of truth for the same seat.
 
 **Route-driven flow instead of a wizard component.** Each booking step is its own route (`/movie/[id]`, `/movie/[id]/seats`, `/movie/[id]/payment`, `/movie/[id]/e-ticket`) rather than one client component swapping steps internally. This makes each step deep-linkable and keeps data-fetching in server components close to where it's used, which is the idiomatic App Router pattern rather than a Blade/Livewire-style single-controller flow.
+
+**Dark cinema theme with a single gold accent.** The visual language deliberately mirrors an actual theater: a near-black ground with soft ambient glow, translucent glass surfaces, and one warm gold accent (`#c6a15b`, echoing Cinema XXI's own wordmark) reserved for interactive/active elements only — never used decoratively. This replaced an earlier light/teal direction after design review; see the component styling for the resulting token set (`brand`, `brand-light`, `brand-dark`, `brand-ink` in `tailwind.config.ts`).
 
 ## Non-goals
 
