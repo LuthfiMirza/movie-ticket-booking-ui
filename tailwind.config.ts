@@ -12,10 +12,10 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
         brand: {
-          DEFAULT: "#009991",
-          dark: "#007a73",
-          light: "#78e0db",
-          muted: "#599097",
+          DEFAULT: "#c6a15b",
+          dark: "#a3823f",
+          light: "#e7cd93",
+          ink: "#221a0a",
         },
       },
       fontFamily: {
