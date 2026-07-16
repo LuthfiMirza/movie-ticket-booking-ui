@@ -38,62 +38,64 @@ export default function PaymentMethodSelector({
   }
 
   return (
-    <section className="rounded-lg border border-neutral-800 bg-neutral-900 p-6">
-      <h2 className="text-lg font-semibold">Payment Method</h2>
-      <p className="mt-1 text-sm text-neutral-400">
-        Choose a dummy payment method to continue this demo flow.
-      </p>
+    <>
+      <section className="rounded-2xl border border-white/60 bg-white/50 p-6 shadow-sm backdrop-blur-xl">
+        <h2 className="font-serif text-lg font-semibold text-neutral-800">Payment Method</h2>
+        <p className="mt-1 text-sm text-neutral-500">
+          Choose a dummy payment method to continue this demo flow.
+        </p>
 
-      <div className="mt-5 flex flex-col gap-3">
-        {PAYMENT_METHODS.map((method) => {
-          const isSelected = selectedMethod === method.id;
+        <div className="mt-5 flex flex-col gap-3">
+          {PAYMENT_METHODS.map((method) => {
+            const isSelected = selectedMethod === method.id;
 
-          return (
-            <label
-              key={method.id}
-              className={`flex cursor-pointer items-start gap-3 rounded-md border p-4 transition-colors ${
-                isSelected
-                  ? "border-red-600 bg-red-600/10"
-                  : "border-neutral-800 bg-neutral-950 hover:border-neutral-700"
-              }`}
-            >
-              <input
-                type="radio"
-                name="paymentMethod"
-                value={method.id}
-                checked={isSelected}
-                onChange={() => setSelectedMethod(method.id)}
-                className="mt-1 h-4 w-4 accent-red-600"
-              />
-              <span className="flex flex-col">
-                <span className="text-sm font-medium text-neutral-100">
-                  {method.label}
+            return (
+              <label
+                key={method.id}
+                className={`flex cursor-pointer items-start gap-3 rounded-xl border p-4 transition-colors ${
+                  isSelected
+                    ? "border-brand bg-brand-light/10"
+                    : "border-neutral-200 bg-white/60 hover:border-brand/40"
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value={method.id}
+                  checked={isSelected}
+                  onChange={() => setSelectedMethod(method.id)}
+                  className="mt-1 h-4 w-4 accent-brand"
+                />
+                <span className="flex flex-col">
+                  <span className="text-sm font-medium text-neutral-800">
+                    {method.label}
+                  </span>
+                  <span className="mt-1 text-xs text-neutral-500">
+                    {method.description}
+                  </span>
                 </span>
-                <span className="mt-1 text-xs text-neutral-500">
-                  {method.description}
-                </span>
-              </span>
-            </label>
-          );
-        })}
-      </div>
+              </label>
+            );
+          })}
+        </div>
+      </section>
 
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-neutral-800 bg-neutral-950/95 px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] shadow-2xl shadow-black/40 backdrop-blur sm:px-6">
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-white/60 bg-white/70 px-4 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] shadow-[0_-4px_24px_rgba(0,0,0,0.08)] backdrop-blur-xl sm:px-6">
         <div className="mx-auto max-w-lg">
           <button
             type="button"
             onClick={handlePayNow}
             disabled={!selectedMethod}
-            className={`inline-flex w-full items-center justify-center rounded-md px-5 py-2.5 text-sm font-medium transition-colors ${
+            className={`inline-flex w-full items-center justify-center rounded-full px-5 py-2.5 text-sm font-medium transition-colors ${
               selectedMethod
-                ? "bg-red-600 text-white hover:bg-red-500"
-                : "cursor-not-allowed bg-neutral-800 text-neutral-500"
+                ? "bg-brand text-white hover:bg-brand-dark"
+                : "cursor-not-allowed bg-neutral-200 text-neutral-400"
             }`}
           >
             Pay Now
           </button>
         </div>
       </div>
-    </section>
+    </>
   );
 }
