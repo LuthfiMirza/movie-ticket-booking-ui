@@ -3,17 +3,14 @@
 import { useMemo, useState } from "react";
 import type { Movie, Showtime } from "@/types";
 import { formatDateLabel, formatPrice } from "@/lib/format";
-import {
-  calculateTotal,
-  getPricingSessionKey,
-  isValidVoucher,
-} from "@/lib/pricing";
+import { calculateTotal, isValidVoucher } from "@/lib/pricing";
 
 interface OrderSummaryProps {
   movie: Movie;
   showtime: Showtime;
   seatIds: string[];
   pricePerSeat: number;
+  onVoucherApplied?: (voucherCode: string) => void;
 }
 
 export default function OrderSummary({
@@ -21,6 +18,7 @@ export default function OrderSummary({
   showtime,
   seatIds,
   pricePerSeat,
+  onVoucherApplied,
 }: OrderSummaryProps) {
   const [voucherInput, setVoucherInput] = useState("");
   const [appliedVoucher, setAppliedVoucher] = useState("");
@@ -36,20 +34,20 @@ export default function OrderSummary({
     if (!normalizedVoucher) {
       setAppliedVoucher("");
       setVoucherMessage(null);
-      window.sessionStorage.removeItem(getPricingSessionKey(showtime.id, seatIds));
+      onVoucherApplied?.("");
       return;
     }
 
     if (!isValidVoucher(normalizedVoucher)) {
       setAppliedVoucher("");
       setVoucherMessage("Kode tidak valid");
-      window.sessionStorage.removeItem(getPricingSessionKey(showtime.id, seatIds));
+      onVoucherApplied?.("");
       return;
     }
 
     setAppliedVoucher(normalizedVoucher);
     setVoucherMessage(`${normalizedVoucher} applied`);
-    window.sessionStorage.setItem(getPricingSessionKey(showtime.id, seatIds), normalizedVoucher);
+    onVoucherApplied?.(normalizedVoucher);
   }
 
   return (

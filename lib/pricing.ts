@@ -34,7 +34,3 @@ export function calculateTotal(
 export function isValidVoucher(voucherCode: string): boolean {
   return voucherCode.trim().toUpperCase() in VOUCHERS;
 }
-
-export function getPricingSessionKey(showtimeId: string, seatIds: string[]): string {
-  return `pricing:${showtimeId}:${seatIds.join(",")}`;
-}
