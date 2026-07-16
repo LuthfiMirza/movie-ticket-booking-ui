@@ -23,18 +23,25 @@ Before implementation, low-fidelity wireframes were sketched for the two highest
 | Component | Props | Used in |
 |---|---|---|
 | `MovieCard` | `movie: Movie` | Home page (`app/page.tsx`) movie grid |
+| `LocationPicker` | *(none)* | Home page header — city/cinema selector, persisted to `localStorage` |
+| `BookingSteps` | `currentStep: "showtime" \| "seats" \| "payment" \| "done"` | Top of every booking-flow page |
 | `ShowtimeSelector` | `showtimes: Showtime[]` | Movie detail page (`app/movie/[id]/page.tsx`) |
 | `SeatButton` | `seatId: string`, `status: SeatStatus`, `onClick: () => void` | `SeatSelector` (one per seat in the grid) |
 | `SeatSelector` | `seats: Seat[]`, `rows: string[]`, `pricePerSeat: number`, `movieId: string`, `showtimeId: string` | Seats page (`app/movie/[id]/seats/page.tsx`) |
-| `OrderSummary` | `movie: Movie`, `showtime: Showtime`, `seatIds: string[]`, `total: number` | Payment page (`app/movie/[id]/payment/page.tsx`) |
-| `PaymentMethodSelector` | `ticketHref: string` | Payment page dummy method selection |
-| `ETicket` | `movie: Movie`, `showtime: Showtime`, `seatIds: string[]`, `total: number` | E-ticket page (`app/movie/[id]/e-ticket/page.tsx`) |
+| `ReservationTimer` | `showtimeId: string`, `durationSeconds?: number` | Seats and payment pages — countdown badge |
+| `PaymentPanel` | `movie: Movie`, `showtime: Showtime`, `seatIds: string[]`, `baseTicketHref: string` | Payment page — wires `OrderSummary`'s applied voucher into the e-ticket link |
+| `OrderSummary` | `movie: Movie`, `showtime: Showtime`, `seatIds: string[]`, `pricePerSeat: number`, `onVoucherApplied?: (code: string) => void` | `PaymentPanel` |
+| `PaymentMethodSelector` | `ticketHref: string` | `PaymentPanel` — dummy method selection |
+| `ETicket` | `movie: Movie`, `showtime: Showtime`, `seatIds: string[]`, `pricePerSeat: number`, `voucherCode?: string` | E-ticket page (`app/movie/[id]/e-ticket/page.tsx`) |
 
 Shared, non-visual modules:
 
-- `lib/data.ts` — mock movies, showtimes, and seat maps, plus lookup helpers (`getMovieById`, `getShowtimesByMovie`, `getSeatMapByShowtime`).
+- `lib/data.ts` — mock movies, cinemas, showtimes, and seat maps, plus lookup helpers (`getMovieById`, `getShowtimesByMovie`, `getCinemasByCity`, `getSeatMapByShowtime`, `isShowtimeSoldOut`).
 - `lib/format.ts` — `formatDateLabel` and `formatPrice`, shared by `ShowtimeSelector`, the seats page, `OrderSummary`, and `ETicket` to keep date/currency formatting consistent.
-- `types/` — `Movie`, `Showtime`, `Studio`, `Seat`, `SeatStatus`, `SeatMap`.
+- `lib/pricing.ts` — `calculateTotal` (subtotal/admin fee/discount/total breakdown) and `isValidVoucher`.
+- `lib/reservation.ts` — `sessionStorage`-backed reservation countdown helpers used by `ReservationTimer`.
+- `lib/seat-suggestion.ts` — `suggestBestSeats`, aisle-aware best-seat auto-pick used by `SeatSelector`.
+- `types/` — `Movie`, `Showtime`, `Studio`, `Cinema`, `Seat`, `SeatStatus`, `SeatMap`.
 
 ## Design decisions
 
