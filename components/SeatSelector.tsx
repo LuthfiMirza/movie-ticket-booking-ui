@@ -92,6 +92,9 @@ export default function SeatSelector({
             Pilih Otomatis
           </button>
         </div>
+        <p className="text-xs text-neutral-500 sm:hidden">
+          Geser ke samping untuk lihat semua kursi →
+        </p>
         <div className="w-full overflow-x-auto pb-2">
           <div className="mx-auto flex w-max flex-col gap-1.5">
           {seatsByRow.map((rowSeats, index) => (
