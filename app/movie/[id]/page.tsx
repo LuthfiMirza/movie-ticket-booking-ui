@@ -61,8 +61,8 @@ export default async function MoviePage({ params, searchParams }: MoviePageProps
           </span>
         </div>
 
-        <div className="flex flex-col gap-6 sm:flex-row">
-          <div className="relative aspect-[2/3] w-40 shrink-0 overflow-hidden rounded-2xl border border-white/15 shadow-2xl shadow-black/50 sm:w-52">
+        <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
+          <div className="relative aspect-[2/3] w-48 shrink-0 overflow-hidden rounded-2xl border border-white/15 shadow-2xl shadow-black/50 sm:w-52">
             <Image
               src={movie.posterUrl}
               alt={movie.title}
