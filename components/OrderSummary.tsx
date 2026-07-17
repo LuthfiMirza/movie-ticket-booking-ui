@@ -40,7 +40,7 @@ export default function OrderSummary({
 
     if (!isValidVoucher(normalizedVoucher)) {
       setAppliedVoucher("");
-      setVoucherMessage("Kode tidak valid");
+      setVoucherMessage("Invalid code");
       onVoucherApplied?.("");
       return;
     }

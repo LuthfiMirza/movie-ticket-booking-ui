@@ -55,9 +55,9 @@ export default function ShowtimeSelector({ showtimes }: ShowtimeSelectorProps) {
     <div className="flex flex-col gap-6">
       {filteredShowtimes.length === 0 && (
         <div className="rounded-2xl border border-brand/15 bg-white/[0.04] px-4 py-3 text-sm text-neutral-400 backdrop-blur-xl">
-          Tidak ada jadwal di bioskop ini
-          {selectedCinema ? ` (${selectedCinema.name})` : ""}. Silakan ganti bioskop
-          dari halaman utama.
+          No showtimes at this cinema
+          {selectedCinema ? ` (${selectedCinema.name})` : ""}. Try switching cinemas
+          from the home page.
         </div>
       )}
 

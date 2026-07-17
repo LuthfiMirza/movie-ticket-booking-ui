@@ -117,7 +117,7 @@ export default async function MoviePage({ params, searchParams }: MoviePageProps
         <div className="mt-10 border-t border-white/10 pt-8">
           {searchParams.expired === "1" && (
             <div className="mb-6 rounded-2xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-300 backdrop-blur-xl">
-              Sesi reservasi sebelumnya sudah habis, silakan pilih ulang.
+              Your previous reservation session expired — please select again.
             </div>
           )}
           <ShowtimeSelector showtimes={showtimes} />
