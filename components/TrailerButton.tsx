@@ -4,9 +4,10 @@ import { useState } from "react";
 
 interface TrailerButtonProps {
   movieTitle: string;
+  trailerKey?: string;
 }
 
-export default function TrailerButton({ movieTitle }: TrailerButtonProps) {
+export default function TrailerButton({ movieTitle, trailerKey }: TrailerButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -29,29 +30,44 @@ export default function TrailerButton({ movieTitle }: TrailerButtonProps) {
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
           onClick={() => setIsOpen(false)}
         >
-          <div
-            role="dialog"
-            aria-modal="true"
-            onClick={(event) => event.stopPropagation()}
-            className="w-full max-w-sm rounded-2xl border border-brand/20 bg-neutral-900 p-6 text-center"
-          >
-            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-brand-light to-brand">
-              <svg viewBox="0 0 10 10" width="14" height="14" className="ml-0.5 fill-brand-ink">
-                <path d="M1 0 9 5 1 10Z" />
-              </svg>
-            </div>
-            <p className="font-serif text-lg font-semibold text-neutral-50">{movieTitle}</p>
-            <p className="mt-2 text-sm text-neutral-400">
-              Trailer playback is a demo placeholder — this project has no video backend.
-            </p>
-            <button
-              type="button"
-              onClick={() => setIsOpen(false)}
-              className="mt-5 inline-flex w-full items-center justify-center rounded-full bg-white/[0.06] px-4 py-2.5 text-sm font-medium text-neutral-200 transition-colors hover:bg-white/[0.1]"
+          {trailerKey ? (
+            <div
+              onClick={(event) => event.stopPropagation()}
+              className="aspect-video w-full max-w-2xl overflow-hidden rounded-2xl border border-brand/20 bg-black shadow-2xl"
             >
-              Close
-            </button>
-          </div>
+              <iframe
+                src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1`}
+                title={`${movieTitle} trailer`}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="h-full w-full"
+              />
+            </div>
+          ) : (
+            <div
+              role="dialog"
+              aria-modal="true"
+              onClick={(event) => event.stopPropagation()}
+              className="w-full max-w-sm rounded-2xl border border-brand/20 bg-neutral-900 p-6 text-center"
+            >
+              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-brand-light to-brand">
+                <svg viewBox="0 0 10 10" width="14" height="14" className="ml-0.5 fill-brand-ink">
+                  <path d="M1 0 9 5 1 10Z" />
+                </svg>
+              </div>
+              <p className="font-serif text-lg font-semibold text-neutral-50">{movieTitle}</p>
+              <p className="mt-2 text-sm text-neutral-400">
+                No trailer is available for this title right now.
+              </p>
+              <button
+                type="button"
+                onClick={() => setIsOpen(false)}
+                className="mt-5 inline-flex w-full items-center justify-center rounded-full bg-white/[0.06] px-4 py-2.5 text-sm font-medium text-neutral-200 transition-colors hover:bg-white/[0.1]"
+              >
+                Close
+              </button>
+            </div>
+          )}
         </div>
       )}
     </>
