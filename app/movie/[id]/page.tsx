@@ -62,13 +62,13 @@ export default async function MoviePage({ params, searchParams }: MoviePageProps
         </div>
 
         <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
-          <div className="relative aspect-[2/3] w-48 shrink-0 overflow-hidden rounded-2xl border border-white/15 shadow-2xl shadow-black/50 sm:w-52">
+          <div className="relative aspect-[2/3] w-full max-w-xs overflow-hidden rounded-2xl border border-white/15 shadow-2xl shadow-black/50 sm:w-52 sm:max-w-none sm:shrink-0">
             <Image
               src={movie.posterUrl}
               alt={movie.title}
               fill
               unoptimized
-              sizes="(max-width: 640px) 160px, 208px"
+              sizes="(max-width: 640px) 320px, 208px"
               className="object-cover"
             />
             <div className="absolute inset-x-0 bottom-0 flex justify-center bg-gradient-to-t from-black/70 to-transparent p-2">
