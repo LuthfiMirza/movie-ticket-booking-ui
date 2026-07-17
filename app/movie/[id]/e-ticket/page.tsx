@@ -8,8 +8,8 @@ interface ETicketPageProps {
   searchParams: { showtime?: string; seats?: string; voucher?: string };
 }
 
-export default function ETicketPage({ params, searchParams }: ETicketPageProps) {
-  const movie = getMovieById(params.id);
+export default async function ETicketPage({ params, searchParams }: ETicketPageProps) {
+  const movie = await getMovieById(params.id);
   if (!movie) notFound();
 
   const showtime = getShowtimesByMovie(movie.id).find(

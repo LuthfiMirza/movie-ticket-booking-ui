@@ -10,8 +10,8 @@ interface MoviePageProps {
   searchParams: { expired?: string };
 }
 
-export default function MoviePage({ params, searchParams }: MoviePageProps) {
-  const movie = getMovieById(params.id);
+export default async function MoviePage({ params, searchParams }: MoviePageProps) {
+  const movie = await getMovieById(params.id);
 
   if (!movie) {
     notFound();
@@ -34,7 +34,7 @@ export default function MoviePage({ params, searchParams }: MoviePageProps) {
             className="object-cover"
           />
           <div className="absolute inset-x-0 bottom-0 flex justify-center bg-gradient-to-t from-black/70 to-transparent p-2">
-            <TrailerButton movieTitle={movie.title} />
+            <TrailerButton movieTitle={movie.title} trailerKey={movie.trailerKey} />
           </div>
         </div>
         <div className="flex flex-col gap-3">

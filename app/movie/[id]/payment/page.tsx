@@ -9,8 +9,8 @@ interface PaymentPageProps {
   searchParams: { showtime?: string; seats?: string };
 }
 
-export default function PaymentPage({ params, searchParams }: PaymentPageProps) {
-  const movie = getMovieById(params.id);
+export default async function PaymentPage({ params, searchParams }: PaymentPageProps) {
+  const movie = await getMovieById(params.id);
   if (!movie) notFound();
 
   const showtime = getShowtimesByMovie(movie.id).find(

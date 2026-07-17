@@ -10,8 +10,8 @@ interface SeatsPageProps {
   searchParams: { showtime?: string };
 }
 
-export default function SeatsPage({ params, searchParams }: SeatsPageProps) {
-  const movie = getMovieById(params.id);
+export default async function SeatsPage({ params, searchParams }: SeatsPageProps) {
+  const movie = await getMovieById(params.id);
   if (!movie) notFound();
 
   const showtime = getShowtimesByMovie(movie.id).find(
