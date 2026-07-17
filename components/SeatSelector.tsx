@@ -67,17 +67,22 @@ export default function SeatSelector({
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col items-center gap-4">
-        <div
-          className="mb-2 h-8 w-2/3 max-w-sm rounded-b-full"
-          style={{
-            background:
-              "radial-gradient(ellipse at 50% -60%, rgba(231,205,147,0.5), rgba(231,205,147,0.05) 70%)",
-            boxShadow: "0 -8px 24px -6px rgba(198,161,91,0.35)",
-          }}
-        />
+        <div className="flex w-2/3 max-w-sm flex-col items-center gap-1">
+          <div
+            className="h-8 w-full rounded-b-full"
+            style={{
+              background:
+                "radial-gradient(ellipse at 50% -60%, rgba(231,205,147,0.5), rgba(231,205,147,0.05) 70%)",
+              boxShadow: "0 -8px 24px -6px rgba(198,161,91,0.35)",
+            }}
+          />
+          <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-neutral-500">
+            Screen
+          </span>
+        </div>
         <div className="flex w-full flex-col gap-3 rounded-2xl border border-brand/15 bg-white/[0.04] p-4 backdrop-blur-xl sm:flex-row sm:items-end sm:justify-between">
           <label className="flex flex-col gap-1 text-sm font-medium text-neutral-300">
-            Jumlah kursi otomatis
+            Auto-pick seat count
             <input
               type="number"
               min={1}
@@ -96,11 +101,11 @@ export default function SeatSelector({
             onClick={handleAutoPick}
             className="inline-flex items-center justify-center rounded-full bg-gradient-to-br from-brand-light to-brand px-4 py-2 text-sm font-semibold text-brand-ink transition-opacity hover:opacity-90"
           >
-            Pilih Otomatis
+            Auto-Pick
           </button>
         </div>
         <p className="text-xs text-neutral-500 sm:hidden">
-          Geser ke samping untuk lihat semua kursi →
+          Swipe sideways to see all seats →
         </p>
         <div className="w-full overflow-x-auto pb-2">
           <div className="mx-auto flex w-max flex-col gap-1.5">
