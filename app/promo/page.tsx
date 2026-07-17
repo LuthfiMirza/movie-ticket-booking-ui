@@ -7,8 +7,8 @@ export default function PromoPage() {
         Promo
       </h1>
       <EmptyState
-        title="Belum ada promo aktif"
-        description="Voucher dan penawaran khusus akan tampil di sini. Coba kode CINEBOOK10 saat checkout."
+        title="No active promos"
+        description="Vouchers and special offers will show up here. Try code CINEBOOK10 at checkout."
       />
     </main>
   );

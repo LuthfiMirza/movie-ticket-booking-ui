@@ -13,7 +13,7 @@ const TABS = [
   },
   {
     href: "/tickets",
-    label: "Tiket Saya",
+    label: "Tickets",
     icon: (
       <path d="M4 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2a1.5 1.5 0 0 0 0 3v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2a1.5 1.5 0 0 0 0-3V8ZM10 6v12" strokeDasharray="2 2" />
     ),
@@ -30,7 +30,7 @@ const TABS = [
   },
   {
     href: "/account",
-    label: "Akun",
+    label: "Account",
     icon: (
       <>
         <circle cx="12" cy="8" r="3.5" />
