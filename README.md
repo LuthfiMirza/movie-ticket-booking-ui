@@ -1,6 +1,6 @@
 # CineBook — Movie Ticket Booking UI
 
-A front-end movie ticket booking flow built with Next.js 14 (App Router), TypeScript, and Tailwind CSS. Portfolio piece — no backend, no auth, no real payments; the focus is a fully working, defensible React/Next.js UI: movie listing → showtime selection → interactive seat map → dummy payment → e-ticket confirmation.
+A front-end movie ticket booking flow built with Next.js 14 (App Router), TypeScript, and Tailwind CSS. Portfolio piece — no auth, no real payments, no database; the focus is a fully working, defensible React/Next.js UI: movie listing → showtime selection → interactive seat map → dummy payment → e-ticket confirmation. Movie listings, posters, cast, and trailers are real, live data from [TMDB](https://www.themoviedb.org/) — everything downstream of that (cinemas, showtimes, seats, pricing) is mock data, since that's this app's own domain rather than something a movie database would have.
 
 ## Getting Started
 
@@ -10,6 +10,8 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
+
+Optional: add a `TMDB_API_KEY` to `.env.local` (either a v3 API Key or a v4 Read Access Token — both work) to show real now-playing movies, cast, and trailers via [TMDB](https://www.themoviedb.org/). Without it, the app runs fine using a small built-in set of fictional movies.
 
 ## Design process
 
@@ -33,13 +35,14 @@ Before implementation, low-fidelity wireframes were sketched for the two highest
 | `OrderSummary` | `movie: Movie`, `showtime: Showtime`, `seatIds: string[]`, `pricePerSeat: number`, `onVoucherApplied?: (code: string) => void` | `PaymentPanel` |
 | `PaymentMethodSelector` | `ticketHref: string` | `PaymentPanel` — dummy method selection |
 | `ETicket` | `movie: Movie`, `showtime: Showtime`, `seatIds: string[]`, `pricePerSeat: number`, `voucherCode?: string` | E-ticket page (`app/movie/[id]/e-ticket/page.tsx`) |
-| `TrailerButton` | `movieTitle: string` | Movie detail page — opens a dummy trailer overlay (no real video backend) |
+| `TrailerButton` | `movieTitle: string`, `trailerKey?: string` | Movie detail page — plays the real YouTube trailer via TMDB when available, otherwise shows a "no trailer" message |
 | `BottomNav` | *(none)* | Root layout — mobile/tablet tab bar, hidden on desktop and during the booking flow |
 | `EmptyState` | `title: string`, `description: string` | Tickets/Promo/Account placeholder pages |
 
 Shared, non-visual modules:
 
-- `lib/data.ts` — mock movies, cinemas, showtimes, and seat maps, plus lookup helpers (`getMovieById`, `getShowtimesByMovie`, `getCinemasByCity`, `getSeatMapByShowtime`, `isShowtimeSoldOut`).
+- `lib/data.ts` — `getMovies`/`getMovieById` (async, fetch real movies from TMDB with a mock fallback if the API fails), plus mock cinemas, showtimes, and seat maps with lookup helpers (`getShowtimesByMovie`, `getCinemasByCity`, `getSeatMapByShowtime`, `isShowtimeSoldOut`).
+- `lib/tmdb.ts` — TMDB fetch layer: now-playing movies, and per-movie genres/runtime/synopsis/cast/certification/trailer in one request via `append_to_response`.
 - `lib/format.ts` — `formatDateLabel` and `formatPrice`, shared by `ShowtimeSelector`, the seats page, `OrderSummary`, and `ETicket` to keep date/currency formatting consistent.
 - `lib/pricing.ts` — `calculateTotal` (subtotal/admin fee/discount/total breakdown) and `isValidVoucher`.
 - `lib/reservation.ts` — `sessionStorage`-backed reservation countdown helpers used by `ReservationTimer`.
@@ -56,6 +59,8 @@ Shared, non-visual modules:
 
 **Dark cinema theme with a single gold accent.** The visual language deliberately mirrors an actual theater: a near-black ground with soft ambient glow, translucent glass surfaces, and one warm gold accent (`#c6a15b`, echoing Cinema XXI's own wordmark) reserved for interactive/active elements only — never used decoratively. This replaced an earlier light/teal direction after design review; see the component styling for the resulting token set (`brand`, `brand-light`, `brand-dark`, `brand-ink` in `tailwind.config.ts`).
 
+**Real movie data with a graceful fallback.** `getMovies()` fetches TMDB's now-playing list and merges it with this app's own mock cinemas/showtimes/seat maps (keyed by stable internal ids `m1`–`m6`, so which real movie fills each slot can change daily without touching any booking data). If the TMDB request fails for any reason (no API key, network error, rate limit), it falls back to a small set of fictional movies instead of crashing — the app is meant to run and be reviewed even without an API key configured. Per TMDB's terms, the home page credits TMDB as the data source.
+
 ## Non-goals
 
-No real payment integration, authentication, or backend/database — this is a front-end evidence piece, scoped to stay fully defensible under interview questioning.
+No real payment integration, authentication, or database — this is a front-end evidence piece, scoped to stay fully defensible under interview questioning. (It does call one real third-party API, TMDB, for movie data — see Design decisions above.)
