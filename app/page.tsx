@@ -1,8 +1,10 @@
 import LocationPicker from "@/components/LocationPicker";
 import MovieCard from "@/components/MovieCard";
-import { movies } from "@/lib/data";
+import { getMovies } from "@/lib/data";
 
-export default function Home() {
+export default async function Home() {
+  const movies = await getMovies();
+
   return (
     <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
       <header className="mb-8 flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
@@ -25,6 +27,19 @@ export default function Home() {
           <MovieCard key={movie.id} movie={movie} />
         ))}
       </div>
+
+      <p className="mt-10 text-center text-xs text-neutral-600">
+        Movie data and trailers provided by{" "}
+        <a
+          href="https://www.themoviedb.org/"
+          target="_blank"
+          rel="noreferrer"
+          className="underline hover:text-neutral-400"
+        >
+          TMDB
+        </a>
+        . This product uses the TMDB API but is not endorsed or certified by TMDB.
+      </p>
     </main>
   );
 }
