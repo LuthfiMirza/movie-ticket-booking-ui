@@ -73,13 +73,27 @@ export default function LocationPicker() {
   }
 
   return (
-    <div className="flex flex-col gap-2 rounded-2xl border border-brand/15 bg-white/[0.04] p-3 backdrop-blur-xl sm:flex-row sm:items-center">
-      <label className="flex flex-col gap-1 text-xs font-medium uppercase tracking-widest text-neutral-500">
-        City
+    <div className="flex gap-2">
+      <label className="relative flex min-w-0 flex-1 items-center gap-2 rounded-full border border-brand/30 bg-white/[0.05] px-3 py-2 backdrop-blur-xl">
+        <span className="sr-only">City</span>
+        <svg
+          width="13"
+          height="13"
+          viewBox="0 0 24 24"
+          fill="none"
+          className="shrink-0 text-brand-light"
+        >
+          <path
+            d="M12 22s7-7.58 7-12.5A7 7 0 0 0 5 9.5C5 14.42 12 22 12 22Z"
+            stroke="currentColor"
+            strokeWidth="1.8"
+          />
+          <circle cx="12" cy="9.5" r="2.4" stroke="currentColor" strokeWidth="1.8" />
+        </svg>
         <select
           value={selectedLocation.city}
           onChange={(event) => handleCityChange(event.target.value)}
-          className="rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-sm font-medium normal-case tracking-normal text-neutral-100 outline-none transition-colors focus:border-brand"
+          className="min-w-0 flex-1 truncate bg-transparent pr-4 text-xs font-semibold text-neutral-50 outline-none [appearance:none]"
         >
           {cities.map((city) => (
             <option key={city} value={city} className="bg-neutral-900 text-neutral-100">
@@ -87,14 +101,33 @@ export default function LocationPicker() {
             </option>
           ))}
         </select>
+        <svg
+          width="9"
+          height="6"
+          viewBox="0 0 10 6"
+          fill="none"
+          className="pointer-events-none absolute right-3 text-neutral-400"
+        >
+          <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.6" />
+        </svg>
       </label>
 
-      <label className="flex flex-col gap-1 text-xs font-medium uppercase tracking-widest text-neutral-500">
-        Cinema
+      <label className="relative flex min-w-0 flex-1 items-center gap-2 rounded-full border border-brand/30 bg-white/[0.05] px-3 py-2 backdrop-blur-xl">
+        <span className="sr-only">Cinema</span>
+        <svg
+          width="13"
+          height="13"
+          viewBox="0 0 24 24"
+          fill="none"
+          className="shrink-0 text-brand-light"
+        >
+          <rect x="3" y="7" width="18" height="13" rx="2" stroke="currentColor" strokeWidth="1.8" />
+          <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="currentColor" strokeWidth="1.8" />
+        </svg>
         <select
           value={selectedLocation.cinemaId}
           onChange={(event) => handleCinemaChange(event.target.value)}
-          className="rounded-md border border-white/10 bg-white/[0.03] px-3 py-2 text-sm font-medium normal-case tracking-normal text-neutral-100 outline-none transition-colors focus:border-brand"
+          className="min-w-0 flex-1 truncate bg-transparent pr-4 text-xs font-semibold text-neutral-50 outline-none [appearance:none]"
         >
           {cityCinemas.map((cinema) => (
             <option key={cinema.id} value={cinema.id} className="bg-neutral-900 text-neutral-100">
@@ -102,6 +135,15 @@ export default function LocationPicker() {
             </option>
           ))}
         </select>
+        <svg
+          width="9"
+          height="6"
+          viewBox="0 0 10 6"
+          fill="none"
+          className="pointer-events-none absolute right-3 text-neutral-400"
+        >
+          <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.6" />
+        </svg>
       </label>
     </div>
   );
