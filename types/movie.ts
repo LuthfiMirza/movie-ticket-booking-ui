@@ -12,4 +12,6 @@ export interface Movie {
   synopsis: string;
   rating: string;
   cast: CastMember[];
+  /** YouTube video key for the trailer, from TMDB. Absent when no trailer is available. */
+  trailerKey?: string;
 }
