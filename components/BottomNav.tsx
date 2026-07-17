@@ -50,8 +50,8 @@ export default function BottomNav() {
   if (pathname.startsWith("/movie/")) return null;
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-50 border-t border-brand/20 bg-white/[0.04] shadow-[0_-4px_24px_rgba(0,0,0,0.4)] backdrop-blur-xl lg:hidden">
-      <div className="mx-auto flex max-w-2xl items-center justify-around px-2 py-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))]">
+    <nav className="fixed inset-x-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-50 mx-auto max-w-md rounded-full border border-brand/20 bg-white/[0.06] shadow-[0_8px_32px_rgba(0,0,0,0.45)] backdrop-blur-xl lg:hidden">
+      <div className="flex items-center justify-around px-2 py-2">
         {TABS.map((tab) => {
           const isActive = tab.href === "/" ? pathname === "/" : pathname.startsWith(tab.href);
 
