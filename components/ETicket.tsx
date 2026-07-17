@@ -86,35 +86,32 @@ export default function ETicket({
 
         <div className="my-6 border-t border-dashed border-white/15" />
 
-        <div className="grid gap-4 text-sm sm:grid-cols-3">
-          <div>
-            <p className="text-neutral-400">Seats</p>
-            <p className="mt-1 font-semibold text-neutral-100">{seatIds.join(", ")}</p>
+        <div className="flex flex-col gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-4 text-sm">
+          <div className="flex items-center justify-between">
+            <span className="text-neutral-400">Seats</span>
+            <span className="font-semibold text-neutral-100">{seatIds.join(", ")}</span>
           </div>
-          <div>
-            <p className="text-neutral-400">Tickets</p>
-            <p className="mt-1 font-semibold text-neutral-100">{seatIds.length}</p>
+          <div className="flex items-center justify-between">
+            <span className="text-neutral-400">Tickets</span>
+            <span className="font-semibold text-neutral-100">{seatIds.length}</span>
           </div>
-          <div>
-            <p className="text-neutral-400">Total</p>
-            <p className="mt-1 font-semibold text-neutral-100">{formatPrice(pricing.total)}</p>
+          <div className="flex items-center justify-between">
+            <span className="text-neutral-400">Subtotal</span>
+            <span className="font-semibold text-neutral-100">{formatPrice(pricing.subtotal)}</span>
           </div>
-        </div>
-
-        <div className="mt-4 grid gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-4 text-sm sm:grid-cols-3">
-          <div>
-            <p className="text-neutral-400">Subtotal</p>
-            <p className="mt-1 font-semibold text-neutral-100">{formatPrice(pricing.subtotal)}</p>
+          <div className="flex items-center justify-between">
+            <span className="text-neutral-400">Admin Fee</span>
+            <span className="font-semibold text-neutral-100">{formatPrice(pricing.adminFee)}</span>
           </div>
-          <div>
-            <p className="text-neutral-400">Admin Fee</p>
-            <p className="mt-1 font-semibold text-neutral-100">{formatPrice(pricing.adminFee)}</p>
-          </div>
-          <div>
-            <p className="text-neutral-400">Discount</p>
-            <p className="mt-1 font-semibold text-green-500">
+          <div className="flex items-center justify-between">
+            <span className="text-neutral-400">Discount</span>
+            <span className="font-semibold text-green-500">
               {pricing.discount > 0 ? `-${formatPrice(pricing.discount)}` : "—"}
-            </p>
+            </span>
+          </div>
+          <div className="flex items-center justify-between border-t border-dashed border-white/15 pt-3">
+            <span className="font-medium text-neutral-200">Total</span>
+            <span className="text-lg font-bold text-brand-light">{formatPrice(pricing.total)}</span>
           </div>
         </div>
 
