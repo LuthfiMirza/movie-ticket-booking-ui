@@ -52,7 +52,7 @@ export default function PaymentMethodSelector({
             return (
               <label
                 key={method.id}
-                className={`flex cursor-pointer items-start gap-3 rounded-xl border p-4 transition-colors ${
+                className={`flex cursor-pointer items-start gap-3 rounded-xl border p-4 transition-colors has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-brand ${
                   isSelected
                     ? "border-brand bg-brand-light/10"
                     : "border-white/10 bg-white/[0.03] hover:border-brand/40"
@@ -64,8 +64,18 @@ export default function PaymentMethodSelector({
                   value={method.id}
                   checked={isSelected}
                   onChange={() => setSelectedMethod(method.id)}
-                  className="mt-1 h-4 w-4 accent-brand"
+                  className="sr-only"
                 />
+                <span
+                  aria-hidden="true"
+                  className={`mt-1 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border transition-colors ${
+                    isSelected ? "border-brand" : "border-white/20"
+                  }`}
+                >
+                  {isSelected && (
+                    <span className="h-2 w-2 rounded-full bg-gradient-to-br from-brand-light to-brand" />
+                  )}
+                </span>
                 <span className="flex flex-col">
                   <span className="text-sm font-medium text-neutral-100">
                     {method.label}
