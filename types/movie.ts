@@ -1,6 +1,8 @@
 export interface CastMember {
   name: string;
   role: string;
+  /** TMDB profile photo URL. Absent when TMDB has no photo on file for this person. */
+  profileUrl?: string;
 }
 
 export interface Movie {

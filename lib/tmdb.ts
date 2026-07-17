@@ -3,6 +3,7 @@ import { createPosterDataUri } from "@/lib/poster";
 
 const TMDB_API_BASE = "https://api.themoviedb.org/3";
 const TMDB_IMAGE_BASE = "https://image.tmdb.org/t/p/w500";
+const TMDB_PROFILE_IMAGE_BASE = "https://image.tmdb.org/t/p/w185";
 
 interface TmdbGenre {
   id: number;
@@ -12,6 +13,7 @@ interface TmdbGenre {
 interface TmdbCastMember {
   name: string;
   character: string;
+  profile_path: string | null;
 }
 
 interface TmdbVideo {
@@ -97,6 +99,7 @@ function mapCast(cast: TmdbCastMember[]): CastMember[] {
   return cast.slice(0, 3).map((member) => ({
     name: member.name,
     role: member.character || "—",
+    profileUrl: member.profile_path ? `${TMDB_PROFILE_IMAGE_BASE}${member.profile_path}` : undefined,
   }));
 }
 
