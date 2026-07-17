@@ -1,5 +1,6 @@
 import type { Cinema, Movie, Showtime, Seat, SeatMap } from "@/types";
 import { createPosterDataUri } from "@/lib/poster";
+import { fetchNowPlayingMovies } from "@/lib/tmdb";
 
 export const cinemas: Cinema[] = [
   { id: "c1", city: "Jakarta", name: "CineBook Grand Indonesia" },
@@ -8,7 +9,11 @@ export const cinemas: Cinema[] = [
   { id: "c4", city: "Bandung", name: "CineBook Braga Citywalk" },
 ];
 
-export const movies: Movie[] = [
+const INTERNAL_MOVIE_IDS = ["m1", "m2", "m3", "m4", "m5", "m6"];
+
+// Used only if the TMDB fetch fails (missing/invalid API key, network error,
+// rate limit) — keeps the demo usable offline or before TMDB_API_KEY is set.
+const FALLBACK_MOVIES: Movie[] = [
   {
     id: "m1",
     title: "Nebula Drift",
@@ -153,7 +158,17 @@ export const seatMaps: SeatMap[] = [
   createSeatMap("s12", ["A8", "B8", "C8"]),
 ];
 
-export function getMovieById(id: string): Movie | undefined {
+export async function getMovies(): Promise<Movie[]> {
+  try {
+    return await fetchNowPlayingMovies(INTERNAL_MOVIE_IDS);
+  } catch (error) {
+    console.error("Falling back to mock movies — TMDB fetch failed:", error);
+    return FALLBACK_MOVIES;
+  }
+}
+
+export async function getMovieById(id: string): Promise<Movie | undefined> {
+  const movies = await getMovies();
   return movies.find((movie) => movie.id === id);
 }
 
